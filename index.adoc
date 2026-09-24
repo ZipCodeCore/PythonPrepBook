@@ -172,6 +172,10 @@ include::return.adoc[]
 
 include::dictionary.adoc[]
 
+include::sets.adoc[]
+
+include::tuples.adoc[]
+
 include::modules.adoc[]
 
 include::objectsmethods.adoc[]
