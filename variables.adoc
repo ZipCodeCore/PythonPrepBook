@@ -31,13 +31,13 @@ So this means the following are fine for variable names in Python:
 x
 AREA
 height
-Width
-currentScore
-playerOne
-playerTwo
-sumOfCredits
-_lastPlay
-isPlayerAlive
+width
+current_score
+player_one
+player_two
+sum_of_credits
+_last_play
+is_player_alive
 ----
 
 And uppercase and lowercase letters are different.
@@ -95,8 +95,8 @@ x = "nineteen"
 print(x) # -> nineteen
 ----
 
-Notice how we assign "nineteen" to _x_. We can assign (re-assign) to a variable as many times as
-we might need to.
+Notice how we assign "nineteen" to _x_.
+We can assign (re-assign) to a variable as many times as we might need to.
 
 [source]
 ----
@@ -108,11 +108,12 @@ age = age + 1
 print(age); # -> 5
 ----
 
-Notice here how _age's_ current value is used, added one to it, and re-assigned *back into the variable* _age_.
+Notice here how _age's_ current value is used, added one to it, and re-assigned *back to the variable* _age_.
 
-Now, one of the weird (to me anyway) things Python can do is change the type of a variable while the program is running.
-A lot of languages won't you do this. But it can be handy in Python.
-In Python, variables are dynamic (can contain any data) which means a variable can be a string and later be a number.
+Now, one of the weird (to me anyway) things Python can do is a variable to point to *any* kind of item, while the program is running.
+A lot of languages won't you do this.
+But it can be handy in Python.
+In Python, variables are dynamic (can reference any data object) which means a variable can be a string now and later be a number.
 
 [source]
 ----
@@ -125,7 +126,7 @@ print(height) # -> very tall
 # and then it's a string.
 ----
 
-_You can't see it, but I am slowly shaking my head in disbelief. Some day, maybe I'll explain why._
+_You can't see it, but I am slowly shaking my head in disbelief. Some day, maybe I'll explain why. Or maybe you'll explain it to me._
 
 === Constants
 
@@ -151,10 +152,10 @@ Python can keep track of a number of different kinds of data, and these are know
 as "data types". Here are a few of them.
 
 * *Numeric* - there are two kinds of numbers: integers, floats and complex
-** *Integers* are like 0, -4, 5, 6, 1234
-** *Floats* are numbers where the decimals matter like  0.005, 1.7, 3.14159, -1600300.4329
+** *Whole Numbers* -*int* are like 0, -4, 5, 6, 1234
+** *Decimal Numbers* - *float* are numbers where the decimals matter like  0.005, 1.7, 3.14159, -1600300.4329
 ** *Complex* are, well, if you don't already know, let's ignore them.
-* *str* - a _string_ of characters -
+* *Strings* - *str* - a _string_ of characters -
 ** like 'text' or "Hello, World!"
 * *Boolean* - is either *True* or *False*
 ** often used to decide things like isPlayer(1).alive() [True or False?]
@@ -165,6 +166,17 @@ what _type_ a piece of data is is very important. And it is the programmer's job
 data get handled in the right ways.
 
 So Python has a few fundamental *data types* that it can handle. And we will cover each one in turn.
+Any variable can be handed to the **type()** builtin functions and it will tell you what type the variable references.
+
+[source]
+----
+x = 42
+print(type(x)) # -> <class 'int'>
+r = 3.14
+print(type(r)) # -> <class 'float'>
+s = 'Hello, World!'
+print(type(s)) # -> <class 'str'>
+----
 
 [TIP]
 ====
@@ -186,13 +198,13 @@ Store a value in each.
 x = 0
 
 # boolean
-playerOneAlive = True
+player_one_alive = True
 
 # float
-currentSpeed = 55.0
+current_speed = 55.0
 
 # string
-playerOneName = 'Rocco'
+player_one_name = 'Rocco'
 ----
 
 Now, you try it. Write down a variable name and assign
