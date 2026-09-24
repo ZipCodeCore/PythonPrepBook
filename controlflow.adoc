@@ -15,16 +15,16 @@ When programs start to get more sophisticated, the _control flow_ can be changed
 
 [source]
 ----
-peoplePerTable = 5
+people_per_table = 5
 tables = 8
 
-maximumRoomOccupancy = tables * peoplePerTable
+maximum_room_occupancy = tables * people_per_table
 # up to this point we just stepped line by line
 
-if (bridesDesiredPartySize > maximumRoomOccupancy):
-    canHandleThisReception = False
+if (brides_desired_party_size > maximum_room_occupancy):
+    can_handle_this_reception = False
 else:
-    canHandleThisReception = True
+    can_handle_this_reception = True
 ----
 
 See how the IF statement can change a variable based on a decision about another variable?

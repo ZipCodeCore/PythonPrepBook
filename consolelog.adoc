@@ -71,7 +71,7 @@ We can also add useful stuff to the .log call.
 ----
 flour_amount = 3.5;
 
-print("We need", flourAmount, "cups of flour."); # -> We need 3.5 cups of flour.
+print("We need", flour_amount, "cups of flour."); # -> We need 3.5 cups of flour.
 ----
 
 See how Python types it all out as a useful phrase? That proves to be very handy in a million-plus (or more) cases.
@@ -99,7 +99,7 @@ Each of these lines is something we'd like Python to *compute* for us. That comp
 
 *Arithmetic expressions* are, as their name implies, something that require arithmetic to get the answer. An expression like "5 + 8 - 3" gets _evaluated_ to 10.
 
-*Boolean expressions* result in either a True or a False value. Example: "maxSpeed > 500.0" - this is either true or false depending on the value of maxSpeed.
+*Boolean expressions* result in either a True or a False value. Example: "max_speed > 500.0" - this is either true or false depending on the value of max_speed.
 
 === Statements
 
@@ -158,7 +158,7 @@ if (mage_power > 120.0):
         backpack.load()
 
 # some more code
-print(magePower, "is your Mage's Power rating.")
+print(mage_power, "is your Mage's Power rating.")
 ----
 
 See those SPACES (and confusingly, they might be TABs but you cannot tell that by looking at the line).

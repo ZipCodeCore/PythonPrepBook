@@ -14,17 +14,17 @@ This idea of a condition that is either TRUE or FALSE, is known as a *boolean ex
 Boolean expressions can be very complex, or very simple:
 
 ****
-playerOne.isAlive() == true
+player_one.is_alive() == true
 ****
 
 might be a key thing to know inside of a game. But it might be more complicated:
 
 ****
-player[1].isAlive() == true
+player[1].is_alive() == true
 and
-player[2].isAlive() == true
+player[2].is_alive() == true
 and
-spaceStation.hasAir() == true
+space_station.has_air() == true
 ****
 
 All three things need to be true to continue the game. Using boolean expressions, we can build very powerful tests to make sure everything is just as we need it to be.
@@ -35,11 +35,11 @@ We also need more kinds of boolean expressions when we are programming. Things l
 
 [source, Python]
 ----
-healthScore = 5
+health_score = 5
 ----
 
-We need a way to ask about expressions like "is healthScore less than 7?? (very healthy)" or
-"is healthScore greater than or equal to 3?? (maybe barely alive?)"
+We need a way to ask about expressions like "is health_score less than 7?? (very healthy)" or
+"is health_score greater than or equal to 3?? (maybe barely alive?)"
 
 To do that we need a bunch of *comparison operators*.
 
@@ -61,11 +61,11 @@ Each of these can be used to make it very clear to someone reading your code wha
 altitude > 500.0   # high enough to not hit any trees!
 airspeed >= 85.0   # fast enough to stay in the air.
 
-fuelAvailable <= 5.0   # need to land to refuel!
+fuel_available <= 5.0   # need to land to refuel!
 
-totalCargoWeight < 6.0  # more than 6 tons and we can't take off!
+total_cargo_weight < 6.0  # more than 6 tons and we can't take off!
 
-pilot.isAlive() and copilot.isAlive()  # everything is fine, keep flying.
+pilot.is_alive() and copilot.is_alive()  # everything is fine, keep flying.
 ----
 
 Like the ANDs in the examples above or this last boolean expression with the `and`` in it, we have in Python the ability to combine expressions into larger more complex expressions using `and` and `or`.
@@ -77,7 +77,7 @@ The *logical operators* are AND and OR, except in Python we use *and* for AND an
 [cols=",,",options="header",]
 |===
 |Operator |Description |
-|and |Logical AND |playerOneStatus == 'alive' and spacecraft.hasAir()
+|and |Logical AND |player_one_status == 'alive' and spacecraft.has_air()
 |or |Logical OR |room.Temp > 70 or room.Temp < 75
 |===
 
@@ -110,11 +110,11 @@ use lots of different comparisons, and combine them with and and or.
 # deep in a cash machine application...
 (customer.balance() <= 20.00 \
 and \
-customer.hasOverDraftProtection() == true) \
+customer.has_over_draft_protection() == true) \
 or \
 (customer.savings.balance() > 20.0 \
 and \
-customer.canTransferFromSavings() )
+customer.can_transfer_from_savings() )
 ----
 
 See how these conditions could line up to allow a customer to 
@@ -133,13 +133,13 @@ Here is an example:
 
 [source]
 ----
-houseTemp = 67.0
-thermostatSetting = 70.0
+house_temp = 67.0
+thermostat_setting = 70.0
 
-print(houseTemp >= 55.0)
-print(houseTemp <= thermostatSetting)
-print(thermostatSetting != 72.0)
-print(houseTemp > 65.0 and thermostatSetting == 68.0)
+print(house_temp >= 55.0)
+print(house_temp <= thermostat_setting)
+print(thermostat_setting != 72.0)
+print(house_temp > 65.0 and thermostat_setting == 68.0)
 ----
 
 These print statements should produce True, True, True and False.

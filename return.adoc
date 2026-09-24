@@ -7,18 +7,18 @@ As you have seen, _functions_ are used to make code more understandable, cleaner
 
 [source]
 ----
-minorHit = 3
-majorHit = 7
+minor_hit = 3
+major_hit = 7
 
-def adjustHealth(player, hit):
+def adjust_health(player, hit):
     player[health] = player[health] - hit
 
-    if (isAlive(player) == false):
-        return playerDead
+    if (is_alive(player) == false):
+        return player_dead
     
-    return playerAlive
+    return player_alive
 
-def isAlive(player, hit):
+def is_alive(player, hit):
     if (player[health] >= 20):
         return true
     else: # player has died!
@@ -31,13 +31,13 @@ If someplace in our code we were to do something like:
 [source]
 ----
 # big hit!
-continuePlaying = adjustHealth(playerOne, majorHit)
+continue_playing = adjust_health(player_one, major_hit)
 
-if (continuePlaying == playerDead):
-    endGame()
+if (continue_playing == player_dead):
+    end_game()
 ----
 
-You can see how when we call the function "adjustHealth()" it returns either playerAlive or playerDead, and we make a decision to end the game if the player has died.
+You can see how when we call the function "adjust_health()" it returns either player_alive or player_dead, and we make a decision to end the game if the player has died.
 
 Notice too, you can have multiple return statements in functions, and each one can return a different value if that's what you need.
 

@@ -8,7 +8,7 @@ Meant as an example of a longer program (159 lines) to get you thinking, it's re
 The general idea is you have a series of "burns" in a list, and the game (or simulator, if you will) steps through the list applying each burn. 
 If you run out of altitude (or height) while you're going too fast, you will crash.
 
-The tricky bit would be for you to figure out what `burnArray` would be used to safely land at a vehicle speed 1 or 2. That could be hard.
+The tricky bit would be for you to figure out what `burn_array` would be used to safely land at a vehicle speed 1 or 2. That could be hard.
 
 [source]
 ----
@@ -35,7 +35,7 @@ def randomheight():
     return (r % 15000 + 4000)
 
 
-def gameHeader():
+def game_header():
     s = ""
     s = s + "\nMars Lander - Version " + version + "\n"
     s = s + "This is a computer simulation of an Apollo Mars landing capsule.\n"
@@ -47,7 +47,7 @@ def gameHeader():
     return s
 
 
-def getHeader():
+def get_header():
     s = ""
     s = s + "\nTime\t"
     s = s + "Speed\t\t"
@@ -63,11 +63,11 @@ def getHeader():
 
 
 
-def computeDeltaV(vehicle):
+def compute_delta_v(vehicle):
     return (vehicle['Speed'] + GRAVITY - vehicle['Burn'])
 
 
-def checkStatus(vehicle):
+def check_status(vehicle):
     s = ""
     if (vehicle['Height'] <= 0):
         if (vehicle['Speed'] > 10):
@@ -86,26 +86,26 @@ def checkStatus(vehicle):
     return s
 
 
-def adjustForBurn(vehicle):
-    # save previousHeight
+def adjust_for_burn(vehicle):
+    # save previous_height
     vehicle['PrevHeight'] = vehicle['Height']
     # compute new velocity
-    vehicle['Speed'] = computeDeltaV(vehicle)
+    vehicle['Speed'] = compute_delta_v(vehicle)
     # compute new height of vehicle
     vehicle['Height'] = vehicle['Height'] - vehicle['Speed']
     # subtract fuel used from tank
     vehicle['Fuel'] = vehicle['Fuel'] - vehicle['Burn']
 
 
-def stillFlying():
+def still_flying():
     return (vehicle['Height'] > 0)
 
 
-def outOfFuel(vehicle):
+def out_of_fuel(vehicle):
     return (vehicle['Fuel'] <= 0)
 
 
-def getStatus(vehicle):
+def get_status(vehicle):
     # create a string with the vehicle status on it.
     s = ""
     s = str(vehicle['Tensec']) + "0 \t\t" + str(vehicle['Speed']) \
@@ -113,7 +113,7 @@ def getStatus(vehicle):
     return s
 
 
-def printString(string):
+def print_string(string):
     # print long strings with new lines the them.
     # a = string.split(/\r?\n/)
     #for (i = 0 i < a.length i++):
@@ -135,7 +135,7 @@ vehicle = {
 
 
 # main game loop
-def runGame(burns):
+def run_game(burns):
     status = ""
 
     # Set initial vehicle parameters
@@ -143,33 +143,33 @@ def runGame(burns):
     vehicle['Height'] = h
     vehicle['PrevHeight'] = h
 
-    burnIdx = 0
+    burn_idx = 0
 
-    printString(gameHeader())
-    printString(getHeader())
+    print_string(game_header())
+    print_string(get_header())
 
-    while (stillFlying() == True):
-        status = getStatus(vehicle)
-        vehicle['Burn'] = burns[burnIdx]
-        printString(status + "\t\t" + str(vehicle['Burn']))
-        adjustForBurn(vehicle)
-        if (outOfFuel(vehicle) == True):
+    while (still_flying() == True):
+        status = get_status(vehicle)
+        vehicle['Burn'] = burns[burn_idx]
+        print_string(status + "\t\t" + str(vehicle['Burn']))
+        adjust_for_burn(vehicle)
+        if (out_of_fuel(vehicle) == True):
             break
         
         vehicle['Tensec'] += 1
-        burnIdx += 1
+        burn_idx += 1
 
 
     
-    status = checkStatus(vehicle)
-    printString(status)
+    status = check_status(vehicle)
+    print_string(status)
 
 
 # these are the series of burns made each 10 secs by the lander.
 # change them to see if you can get the lander to make a soft landing.
 # burns are between 0 and 200. This burn array usually crashes.
-burnArray = [100, 100, 200, 200, 100, 100, 0, 0, 200, 100, 100, 0, 0, 0, 0]
+burn_array = [100, 100, 200, 200, 100, 100, 0, 0, 200, 100, 100, 0, 0, 0, 0]
 
-runGame(burnArray)
+run_game(burn_array)
 
 ----

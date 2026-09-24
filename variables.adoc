@@ -158,7 +158,7 @@ as "data types". Here are a few of them.
 * *Strings* - *str* - a _string_ of characters -
 ** like 'text' or "Hello, World!"
 * *Boolean* - is either *True* or *False*
-** often used to decide things like isPlayer(1).alive() [True or False?]
+** often used to decide things like is_player(1).alive() [True or False?]
 * *None* - no value at all (nil or null in other languages)
 
 It is common for a computer language to want to know if data is a bunch numbers or text. Tracking
