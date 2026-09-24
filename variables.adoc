@@ -3,11 +3,19 @@
 
 === Variables
 
-In Python, variables are containers used to store data while the program is running. Variables can be named just about anything, and often are named things that make you think about what you store there.
+A variable in Python is best understood as a *name that points at a value* — not a box that contains one.
+This distinction sounds pedantic the first time you hear it, and then becomes the thing that saves you from real confusion a few chapters from now, once two different names can point at the *same* value at the same time.
+For now, the practical consequence is simpler: a name is just a label, and Python does not care at all what you call something.
+It cares what the something *is*.Variables can be named just about anything, and often are named things that make you think about what you store there.
 
-Think of them as little boxes you can put data into, to keep it there and not lose it.
+[source]
+----
+ratings = [4.5, 3.0, 5.0, 4.0]
+cats = 3
+cat_name = 'Fluffy'
+----
 
-There are some rules about variables. 
+There are some rules about variable names.
 
 - All Variables must be named.
 - Names can contain letters, digits, and underscores
@@ -33,7 +41,7 @@ isPlayerAlive
 ----
 
 And uppercase and lowercase letters are different.
-So each of these are DIFFERENT variables even 
+So each of these are DIFFERENT variables even
 though they are based on the same word(s).
 
 [source]
@@ -131,9 +139,9 @@ GRAVITY = 9.8
 ----
 They are _usually_ declared in a file named 'constants.py'.
 
-Note: In reality, we don't use constants in Python. 
-(The language _doesn't_ have them.) 
-Naming them in all capital letters is a convention to separate them from variables, however, it does not actually prevent reassignment. 
+Note: In reality, we don't use constants in Python.
+(The language _doesn't_ have them.)
+Naming them in all capital letters is a convention to separate them from variables, however, it does not actually prevent reassignment.
 So be careful.
 
 
@@ -146,33 +154,33 @@ as "data types". Here are a few of them.
 ** *Integers* are like 0, -4, 5, 6, 1234
 ** *Floats* are numbers where the decimals matter like  0.005, 1.7, 3.14159, -1600300.4329
 ** *Complex* are, well, if you don't already know, let's ignore them.
-* *str* - a _string_ of characters - 
+* *str* - a _string_ of characters -
 ** like 'text' or "Hello, World!"
 * *Boolean* - is either *True* or *False*
 ** often used to decide things like isPlayer(1).alive() [True or False?]
 * *None* - no value at all (nil or null in other languages)
 
 It is common for a computer language to want to know if data is a bunch numbers or text. Tracking
-what _type_ a piece of data is is very important. And it is the programmer's job to make sure all the 
-data get handled in the right ways. 
+what _type_ a piece of data is is very important. And it is the programmer's job to make sure all the
+data get handled in the right ways.
 
-So Python has a few fundamental *data types* that it can handle. And we will cover each one in turn. 
+So Python has a few fundamental *data types* that it can handle. And we will cover each one in turn.
 
 [TIP]
 ====
 Create variables for each primitive data type:
 
-- boolean, 
-- float, 
-- integer, 
-- str 
+- boolean,
+- float,
+- integer,
+- str
 
 Store a value in each.
 ====
 
 [source]
 ----
-# Here are some samples. 
+# Here are some samples.
 
 # integer
 x = 0
@@ -192,6 +200,5 @@ a normal value to it.
 
 === Data Structures
 
-Python has a series of different _data structures_ built into the language. 
+Python has a series of different _data structures_ built into the language.
 Its built-in data structures include lists, tuples, sets, and dictionaries.
-
