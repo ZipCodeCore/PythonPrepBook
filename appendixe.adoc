@@ -1,0 +1,179 @@
+
+
+[appendix]
+== The Shell Pattern: Setup, Loop, Ending
+
+Here's something fun: a number-guessing game, a game of Hangman, and a little terminal calculator all have almost nothing in common - and yet, underneath, they're all built from the exact same skeleton. Once you learn to see that skeleton, you can build your own terminal programs just by filling in the blanks. Programmers sometimes call this the *shell* pattern, since everything else gets built inside this one reusable shape.
+
+=== The Three Phases
+
+Every simple terminal program breaks into three phases, in this exact order:
+
+[cols=",,",options="header",]
+|===
+|Phase |Runs |Typical Jobs
+|*Setup* |Once, before anything else happens |Create your variables, generate the secret, print a welcome message
+|*Loop* |Repeatedly, until the program is done |Get input, check it, update the game's state, give feedback
+|*Ending* |Once, after the loop breaks |Announce the result, reveal the answer, offer to go again
+|===
+
+That's really it. Setup happens once. The loop happens over and over. Ending happens once. Let's build a real one.
+
+=== A Worked Example: Too High / Too Low
+
+We'll build a classic: the computer picks a secret number between 1 and 100, and the player has 7 guesses to find it, with a hint of "too high" or "too low" after each try.
+
+==== Setup
+
+[source]
+----
+import random
+
+# ---------- SETUP (runs once) ----------
+secret = random.randint(1, 100)
+guesses_left = 7
+game_over = False
+player_won = False
+
+print("Welcome to Too High / Too Low!")
+print("I'm thinking of a number between 1 and 100. You have 7 guesses.")
+----
+
+Notice everything here happens *before* the player has done anything at all: we pick the secret number, set up our tracking variables, and print the instructions. None of this needs to happen again once the game is underway.
+
+==== Loop
+
+[source]
+----
+# ---------- LOOP (runs until the game ends) ----------
+while not game_over:
+    guess = int(input("Your guess: "))
+    guesses_left -= 1
+
+    if guess == secret:
+        player_won = True
+    elif guess < secret:
+        print("Too low!")
+    else:
+        print("Too high!")
+
+    print(guesses_left, "guesses left.")
+
+    if player_won or guesses_left == 0:
+        game_over = True
+----
+
+This is where the game actually lives. Every single time through the loop, we ask for a guess, check it against the secret, print a hint, and then ask one important question at the very bottom: *should we keep going?* That last `if` is the loop's exit check - it's the only thing standing between "keep playing" and "stop." Set `game_over` to `True`, and the `while not game_over:` condition at the top goes false, and the loop ends.
+
+==== Ending
+
+[source]
+----
+# ---------- ENDING (runs once, after the loop stops) ----------
+if player_won:
+    print("You got it! The number was", secret)
+else:
+    print("Out of guesses. The number was", secret)
+----
+
+Once the loop breaks, we never go back into it. We just look at what happened - did `player_won` end up `True` or not? - and print one final message.
+
+Put all three pieces together, one after another in a single file, and you have a complete, playable game.
+
+=== Playing Again, Without Repeating Yourself
+
+Most games ask "play again?" when they're done. The cleanest way to do that is to wrap your whole Setup/Loop/Ending shell inside a function, and then call that function from a *second*, outer loop.
+
+[source]
+----
+def play_round():
+    # ---------- SETUP ----------
+    secret = random.randint(1, 100)
+    guesses_left = 7
+    game_over = False
+    player_won = False
+
+    print("Welcome to Too High / Too Low!")
+    print("I'm thinking of a number between 1 and 100. You have 7 guesses.")
+
+    # ---------- LOOP ----------
+    while not game_over:
+        guess = int(input("Your guess: "))
+        guesses_left -= 1
+
+        if guess == secret:
+            player_won = True
+        elif guess < secret:
+            print("Too low!")
+        else:
+            print("Too high!")
+
+        print(guesses_left, "guesses left.")
+
+        if player_won or guesses_left == 0:
+            game_over = True
+
+    # ---------- ENDING ----------
+    if player_won:
+        print("You got it! The number was", secret)
+    else:
+        print("Out of guesses. The number was", secret)
+
+
+playing = True
+while playing:
+    play_round()
+    again = input("Play again? (y/n): ")
+    if again.lower() != "y":
+        playing = False
+
+print("Thanks for playing!")
+----
+
+NOTE: You might come across other versions of this pattern online that have the game's function call *itself* again to restart, instead of using an outer loop like we did. That trick is called *recursion* - a function calling itself - and it's a genuinely useful technique, but it's a bit further down the road than this book goes. The outer `while playing:` loop above gets you the exact same "play again" behavior, using only tools you already have.
+
+=== A Decision Guide: What Goes Where?
+
+Whenever you're not sure which of the three phases a piece of code belongs in, ask yourself these questions, in order:
+
+* *Does it happen exactly once, before the player does anything?* → Setup.
+* *Does it need to happen again on every single turn?* → The loop's body.
+* *Does it decide whether the loop should keep going, or stop?* → The loop's exit check.
+* *Does it only make sense after the game is completely finished?* → Ending.
+
+If you can answer one of those confidently, you already know exactly where that code belongs.
+
+=== The Same Shell, Different Games
+
+Here's the real payoff: this shell isn't specific to number-guessing at all. Swap out what happens *inside* each phase, and the very same three-part shape builds an entirely different program.
+
+Take Hangman:
+
+* *Setup* - pick a secret word, set `lives = 6`, start an empty list of guessed letters, and display the word as a row of blanks.
+* *Loop* - show the word's current progress, ask for a letter, reveal it if it's in the word (or subtract a life if it isn't), and check whether the player has run out of lives or guessed the whole word.
+* *Ending* - announce a win or a loss, reveal the secret word, and ask to play again.
+
+Or think back to the calculator programs from the Simple Calculation Programs chapter. Turn one into an interactive, REPL-style calculator, and it fits this exact same shell too:
+
+* *Setup* - print a welcome banner, and set up an empty `history` list to remember past calculations.
+* *Loop* - print a `calc>` prompt, read in an operation and some numbers, compute the result, add it to `history`, and print it - checking each time whether the player typed `"quit"`.
+* *Ending* - print "Goodbye!" and maybe show the full history of everything that was calculated.
+
+Different game, different calculator, same three-part skeleton underneath. The player becomes the user; the guess becomes a math operation; the secret number becomes a computed result. The shape never changes.
+
+[TIP]
+====
+* Pick either Hangman or the REPL calculator described above
+* Sketch out, in plain English, what belongs in *your* Setup, Loop, and Ending
+* Then write the actual code, one phase at a time, using the Too High / Too Low example above as your model
+====
+
+=== Key Takeaways
+
+* Every simple terminal program follows the same shape: *Setup → Loop → Ending*
+* The loop is the heart of the program - it keeps running until some condition breaks it
+* For any piece of code, ask: does this run *once* (Setup or Ending), or does it run *every turn* (the Loop)?
+* This shell works for games *and* for tools - calculators, quizzes, unit converters, anything with a "keep going until the user is done" feel to it
+* Naming your boolean variables clearly - `game_over`, `player_won` - makes the whole thing dramatically easier to read later
+
+Learn this one shape well, and you'll find yourself reusing it constantly. Build the pattern once, and you can adapt it to almost anything.

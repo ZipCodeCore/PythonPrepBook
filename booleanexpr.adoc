@@ -68,7 +68,7 @@ total_cargo_weight < 6.0  # more than 6 tons and we can't take off!
 pilot.is_alive() and copilot.is_alive()  # everything is fine, keep flying.
 ----
 
-Like the ANDs in the examples above or this last boolean expression with the `and`` in it, we have in Python the ability to combine expressions into larger more complex expressions using `and` and `or`.
+Like the ANDs in the examples above or this last boolean expression with the `and` in it, we have in Python the ability to combine expressions into larger more complex expressions using `and` and `or`.
 
 == Logical Operators
 

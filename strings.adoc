@@ -133,7 +133,7 @@ It follows this pattern:
 
 `end:` The ending index of the substring. The character at this index is NOT included in the substring. If end is not included, or if the value is greater than the string length, it is assumed to be equal to the `len()` of the string by default.
 
-`step:`` Every ‘step’ character after the current character to be included. If the step value is not there, Python sets it to 1.
+`step:` Every ‘step’ character after the current character to be included. If the step value is not there, Python sets it to 1.
 
 A start position is required, where to begin the extraction (or substring). Remember, first character is at position 0. 
 Characters are extracted from a string between "start" and "end", not including "end" itself.

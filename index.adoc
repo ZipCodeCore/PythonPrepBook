@@ -1,7 +1,7 @@
 :title-page:
 = Zip Code Wilmington's Programming in Python
 Kristofer Younger <kris@zipcodewilmington.com>
-v2.0.1, 2026-09-24
+v2.0.2, 2026-09-28
 :doctype: book
 :imagesdir: images
 :pdf-theme: pypreptheme.yml
@@ -176,6 +176,10 @@ include::sets.adoc[]
 
 include::tuples.adoc[]
 
+include::functionparams.adoc[]
+
+include::typehints.adoc[]
+
 include::builtins.adoc[]
 
 include::lambdas.adoc[]
@@ -190,13 +194,25 @@ include::setcomprehension.adoc[]
 
 include::modules.adoc[]
 
+include::runvsimport.adoc[]
+
 include::objectsmethods.adoc[]
 
 include::dundermethods.adoc[]
 
+include::iterators.adoc[]
+
+include::generators.adoc[]
+
 include::appendixa.adoc[]
 
 include::appendixb.adoc[]
+
+include::appendixc.adoc[]
+
+include::appendixd.adoc[]
+
+include::appendixe.adoc[]
 
 [appendix]
 == Additional Python Resources

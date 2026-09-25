@@ -102,3 +102,11 @@ Look, we had to range(10, 0, -1) to get the one to print. Otherwise if we had ha
 
 The *range()* function gets used a lot in Python, and is the envy of many programmers in other languages who have use the *for* loop that was handed down from the C programming language.
 So use it widely, and don't gloat -- too much :-)
+
+=== A Quick Word: Iterables
+
+Notice that we've now written `for donut in list_of_donuts:` and `for j in range(5):` - two very different-looking things sitting after that `in`. Python has a name for anything that's allowed to sit there: an *iterable*. Something is iterable if a `for` loop knows how to walk through it, one item at a time.
+
+Lists and ranges are iterables. So are strings - that's exactly what let us loop over "hello" letter by letter, back in the Strings chapter. As you meet more data structures later in this book - dictionaries, sets, tuples - you'll find every single one of them is iterable too, which means `for thing in that_data_structure:` will always just work.
+
+You don't need to know *how* Python pulls this off yet - just get comfortable with the word "iterable," since we'll use it constantly from here on. Much later in the book, in a chapter called Iterators, we'll open the hood and see exactly what makes something iterable in the first place.

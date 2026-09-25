@@ -75,7 +75,7 @@ print(prices_with_tax)  # -> [1.59, 1.855, 2.12]
 
 === Filtering a List
 
-`filter()` is `map()`'s close cousin. Instead of transforming every item, it *keeps only the items that pass a test*, throwing the rest away.
+`filter()` is a close cousin of `map()`. Instead of transforming every item, it *keeps only the items that pass a test*, throwing the rest away.
 
 [source]
 ----

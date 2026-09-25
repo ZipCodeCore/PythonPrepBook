@@ -1,0 +1,149 @@
+
+
+== Flexible Function Parameters
+
+Back in the Functions chapter, every parameter we wrote was required - the caller had to hand over exactly the right number of values, in exactly the right order, every single time. That works fine for simple functions, but real programs often need more flexibility: an optional parameter with a sensible fallback, or a function that has no idea in advance how many values it's about to receive. Python gives you three tools for exactly this: *default parameter values*, `*args`, and `**kwargs`.
+
+=== Default Parameter Values
+
+A default parameter value is a fallback - a value Python uses automatically if the caller doesn't bother providing one.
+
+[source]
+----
+def greet_user(username, greeting="Hello"):
+    return greeting + ", " + username + "!"
+
+print(greet_user("Mike Jones"))              # -> Hello, Mike Jones!
+print(greet_user("Mike Jones", "Welcome back"))  # -> Welcome back, Mike Jones!
+----
+
+Notice `greeting` has `="Hello"` right in the function definition. If the caller only passes one argument, Python fills in `"Hello"` for `greeting` automatically. But if the caller *does* provide a second argument, that value wins instead, overriding the default.
+
+Here's one for our dungeon game:
+
+[source]
+----
+def take_damage(player, amount=10):
+    player["health"] = player["health"] - amount
+
+sam = {"name": "Sam", "health": 100}
+
+take_damage(sam)          # uses the default, amount=10
+print(sam["health"])      # -> 90
+
+take_damage(sam, 25)      # overrides the default
+print(sam["health"])      # -> 65
+----
+
+NOTE: Default parameters must come *after* any required ones in your function's parameter list. `def take_damage(amount=10, player):` would confuse Python - it wouldn't know if a lone argument was meant for `amount` or `player`. Required parameters always come first, defaults come last.
+
+=== Accepting Any Number of Arguments: `*args`
+
+Sometimes you genuinely don't know, ahead of time, how many values a function needs to accept. Maybe you're totaling up hits from an unpredictable, chaotic battle - sometimes there are two hits, sometimes there are seven. That's what `*args` is for.
+
+[source]
+----
+def total_damage(*hits):
+    return sum(hits)
+
+print(total_damage(5, 10, 3))       # -> 18
+print(total_damage(5, 10, 3, 20))   # -> 38
+print(total_damage())               # -> 0
+----
+
+That single `*` in front of `hits` tells Python: "scoop up *any* number of extra positional arguments, and gather them together." And gather them into what, exactly? A *tuple* - the very thing we covered a couple chapters back.
+
+[source]
+----
+def show_me(*hits):
+    print(type(hits))
+    print(hits)
+
+show_me(5, 10, 3)
+# output is
+# <class 'tuple'>
+# (5, 10, 3)
+----
+
+Since it's just a tuple, everything you already know about tuples - indexing, slicing, looping over it - works on `*args` too. You can also mix `*args` with regular parameters, as long as the regular ones come first.
+
+[source]
+----
+def introduce_party(leader, *members):
+    print(leader, "is leading the party.")
+    for member in members:
+        print(member, "is along for the ride.")
+
+introduce_party("Sam", "Jade", "Sadie", "Marcus")
+# output is
+# Sam is leading the party.
+# Jade is along for the ride.
+# Sadie is along for the ride.
+# Marcus is along for the ride.
+----
+
+NOTE: The name `args` is just a convention, not a rule - you could call it `*hits` or `*members` or `*anything_you_want`. It's the single `*` in front that makes it special to Python, not the word "args" itself.
+
+=== Accepting Any Number of Keyword Arguments: `**kwargs`
+
+`**kwargs` is a close cousin of `*args`, except instead of gathering up a bunch of unnamed positional arguments, it gathers up *named* ones - the `key=value` style of arguments - into a dictionary.
+
+[source]
+----
+def build_character(**traits):
+    for key, value in traits.items():
+        print(key, "->", value)
+
+build_character(name="Katniss", district=12, weapon="bow")
+# output is
+# name -> Katniss
+# district -> 12
+# weapon -> bow
+----
+
+Just like `*args` gathers extras into a tuple, `**kwargs` gathers extras into a dictionary - which is why we can loop over it with `.items()`, exactly like we learned in the Dictionaries chapter.
+
+[source]
+----
+def show_me(**traits):
+    print(type(traits))
+    print(traits)
+
+show_me(name="Katniss", district=12)
+# output is
+# <class 'dict'>
+# {'name': 'Katniss', 'district': 12}
+----
+
+Again, `kwargs` is just a common convention for the name - the double `**` is what actually matters to Python.
+
+=== Putting It All Together
+
+You can combine regular parameters, default parameters, `*args`, and `**kwargs` in a single function - but Python insists they show up in this order: regular parameters first, then defaults, then `*args`, then `**kwargs` last.
+
+[source]
+----
+def cast_spell(caster, spell="fireball", *targets, **effects):
+    print(caster, "casts", spell, "on", targets)
+    for effect, value in effects.items():
+        print("  ", effect, "->", value)
+
+cast_spell("Gandalf", "lightning bolt", "Orc1", "Orc2", damage=50, stun=True)
+# output is
+# Gandalf casts lightning bolt on ('Orc1', 'Orc2')
+#    damage -> 50
+#    stun -> True
+----
+
+You won't need all four at once very often, but now you'll recognize each piece when you see it.
+
+[TIP]
+====
+* Write a function `order_donuts(customer, *flavors, **extras)`
+* `customer` is a required, regular parameter
+* `*flavors` should collect any number of donut flavor names
+* `**extras` should collect optional named details, like `sprinkles=True` or `dozen=True`
+* Call it a few different ways, and print out everything the function received
+====
+
+Between default values, `*args`, and `**kwargs`, your functions can now flex to fit however they're called, instead of demanding one rigid, fixed shape every time.

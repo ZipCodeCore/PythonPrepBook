@@ -1,12 +1,16 @@
 
 == Objects/Instances
 
-There are a series if key data types pre-defined (builtin) to Python. The key primaries: "int", "float", "str", "bool", "None".
-And there are the "sequence" types: "list", "tuple", "range".
-Several can also be thought of as "container" types: "list", "tuple","dict", "set", "frozenset".
+There are a series if key data types pre-defined (builtin) to Python. The key primaries: *"int", "float", "str", "bool", "None"*.
+
+And there are the "sequence" types: *"list", "tuple", "range"*.
+
+Several can also be thought of as "container" types: *"list", "tuple","dict", "set", "frozenset"*.
 
 All of these are actually Classes in Python.
 They are all built-in classes, and are available to use without any special syntax.
+And `type()` will tell you the class of an object.
+Any object at all.
 
 Moreover, Python is an object oriented programming language.
 Everything in Python is an object, with its properties/attributes and methods.

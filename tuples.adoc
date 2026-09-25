@@ -109,3 +109,5 @@ spawn_point = (0, 0)  # this should never change
 ----
 
 Tuples aren't as flashy as lists, but they earn their keep. Whenever you find yourself thinking "this data should never change," reach for a tuple, and let Python enforce that promise for you.
+
+Keep tuples in mind as you move on - they're about to make a surprise appearance in the next chapter, tucked inside one of Python's more flexible function tricks.

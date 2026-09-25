@@ -1,0 +1,92 @@
+
+
+[appendix]
+== Virtual Environments and `-m venv`
+
+Throughout this book, we've mostly run small snippets in a REPL, or a single standalone file. But the moment you start writing real projects - and especially once you start installing packages other people have written - you'll run into a very common problem: different projects on the same computer often need *different versions* of the same package. Python's answer to keeping projects from tripping over each other is called a *virtual environment*.
+
+=== The Problem: One Shared, Global Python
+
+Normally, when you install a package (using a tool called `pip`, Python's package installer), it gets installed *globally* - shared by your entire computer, available to every Python program you run. That sounds convenient, until you have two different projects that each need a different version of the same package. Upgrade it for one project, and you might quietly break the other one.
+
+=== What Is a Virtual Environment?
+
+A virtual environment is a private, self-contained folder that holds its own separate copy of Python and its own separate collection of installed packages - completely walled off from your computer's main Python installation, and from every other project's virtual environment.
+
+Think of it like this: instead of every project reaching into one shared, communal toolbox (where someone might swap out a tool you were relying on), each project gets its *own* toolbox, set up exactly the way that project needs it.
+
+=== Creating One with `-m venv`
+
+The good news: you don't need to install anything extra to make one. Python already ships with the tool for this, called `venv`, built right in. From a terminal, inside your project's folder, run:
+
+[source,bash]
+----
+python3 -m venv myenv
+----
+
+That `-m` flag tells `python3`: "don't run a file - run the built-in module named `venv` as a program instead." `myenv` is just the name you're giving this new virtual environment; you'll commonly see it named `venv` or `.venv` in real projects.
+
+After that command finishes, you'll notice a new folder has appeared, named `myenv`, sitting right there next to your code.
+
+=== Activating It
+
+Just creating the environment doesn't put you "inside" it yet - you have to *activate* it, and you'll need to do this again each time you open a fresh terminal window to work on that project.
+
+[source,bash]
+----
+source myenv/bin/activate
+----
+
+NOTE: On Windows, the activation command looks a little different: `myenv\Scripts\activate`.
+
+Once it's activated, you'll usually see the environment's name show up right inside your terminal prompt, something like `(myenv) $`, letting you know, at a glance, that you're "inside" it.
+
+=== Installing Packages Inside It
+
+With the environment activated, anything you install with `pip install` gets installed *only* inside that environment - not system-wide, and not visible to any other project's environment.
+
+[source,bash]
+----
+pip install requests
+----
+
+Now `requests` lives only inside `myenv`. A completely different project, with its own separate virtual environment, won't see it at all, unless you install it there too.
+
+=== Leaving the Environment
+
+When you're done working, one simple command returns you to your regular, system-wide Python.
+
+[source,bash]
+----
+deactivate
+----
+
+=== Sharing a Project Without Sharing the Folder
+
+Here's an important habit: when you share your code with someone else, or move it to a new computer, you almost never copy the `myenv` folder itself along with it - it's often huge, and tied specifically to the machine it was created on. Instead, Python programmers list out *which* packages a project depends on in a plain text file, usually named `requirements.txt`.
+
+[source,bash]
+----
+pip freeze > requirements.txt
+----
+
+That command writes out everything currently installed in your active virtual environment into `requirements.txt`. Then, anyone else working on the project - on their own computer - creates their own fresh virtual environment and installs everything from that same list:
+
+[source,bash]
+----
+pip install -r requirements.txt
+----
+
+That way, everyone working on a project ends up with the exact same packages installed, without ever having to share the environment folder itself.
+
+[TIP]
+====
+* In a terminal, `cd` into a new, empty folder
+* Run `python3 -m venv venv` to create a virtual environment
+* Activate it, and notice your terminal prompt change
+* Run `pip install requests`, and notice it installs without needing any special permissions
+* Run `pip freeze > requirements.txt` and take a look at what got written into that file
+* Run `deactivate` when you're finished
+====
+
+Virtual environments might feel like unnecessary ceremony while you're working through small examples in this book. But the moment you start building real, multi-package projects - which won't be long now - you'll find that almost every professional Python project you ever touch uses one. It's one of those habits well worth building early.

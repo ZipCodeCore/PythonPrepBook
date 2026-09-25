@@ -1,0 +1,108 @@
+
+
+== Loading vs. Running a File
+
+In the Modules chapter, we split code across two files and used `import` to borrow a function from one file into another. That raises a fair question, though: when Python "imports" a file, does it actually *run* that file's code, or just quietly *load* the function definitions sitting inside it? The answer, a little surprisingly, is: it runs *all* of it, every time - and once you understand that, a strange-looking line you'll see constantly in real Python code, `+++if __name__ == "__main__":+++`, stops being a mystery.
+
+=== Every File Gets Run, Top to Bottom
+
+Whether you run a file directly, or another file imports it with `import`, Python does the exact same first step: it executes every top-level statement in that file, in order, from top to bottom.
+
+[source]
+----
+print("Loading greetings module...")
+
+def greet_user(username):
+    return "Hello, " + username + "!"
+----
+_greetings.py_
+
+[source]
+----
+import greetings
+
+print("Now in main.py")
+----
+_main.py_
+
+Now run `main.py`. Here's the output, in order:
+
+[source]
+----
+Loading greetings module...
+Now in main.py
+----
+
+That first `print()`, sitting in `greetings.py`, ran the *instant* `main.py` imported it - well before that second `print()`, the one actually sitting in `main.py`, ever got a turn. That's the "run" half of "loading vs. running": importing a file isn't some special, gentler process that skips over code. It's the exact same thing as running that file, just triggered by another file asking for it instead of you typing its name at a terminal.
+
+=== The Hidden Variable: `+++__name__+++`
+
+Every Python file, while it's actually running, has access to a hidden variable named `+++__name__+++` that tells it exactly *how* it's currently being used.
+
+* If you run a file *directly* - typing something like `python3 greetings.py` at a terminal - Python sets that file's `+++__name__+++` to the special string `+++"__main__"+++`.
+* If a file gets *imported* instead, Python sets its `+++__name__+++` to the module's own name, as a string - so `greetings.py`, when imported, sees `+++__name__+++` equal to `"greetings"`.
+
+[source]
+----
+print("This file's name is:", __name__)
+----
+_greetings.py_
+
+Run it straight from the terminal, `python3 greetings.py`, and you'll see:
+
+[source]
+----
+This file's name is: __main__
+----
+
+But add `import greetings` to the top of `main.py` and run *that* instead, and inside `greetings.py`, that very same line prints something different:
+
+[source]
+----
+This file's name is: greetings
+----
+
+Same file, same line of code - but `+++__name__+++` tells it which situation it's actually in.
+
+=== The `+++if __name__ == "__main__":+++` Pattern
+
+Once you know `+++__name__+++` changes like that, this extremely common pattern stops looking so mysterious:
+
+[source]
+----
+def greet_user(username):
+    return "Hello, " + username + "!"
+
+if __name__ == "__main__":
+    print(greet_user("Mike Jones"))
+----
+_greetings.py_
+
+Read it exactly as it's written: if this file's name is `+++__main__+++`, that means *this exact file* is the one that got launched directly - so run the code indented underneath.
+
+* Run `python3 greetings.py` directly, and `+++__name__+++` really is `+++"__main__"+++`, so the `print()` fires: `Hello, Mike Jones!`
+* But have `main.py` do `import greetings` instead, and inside `greetings.py`, `+++__name__+++` is `"greetings"`, not `+++"__main__"+++` - so that whole `if` block gets skipped entirely. `main.py` still gets the `greet_user` function, ready to use, but that test/demo `print()` never runs on its own.
+
+=== Why This Matters
+
+This pattern lets a single file do double duty: it can be a reusable module, full of functions other files are meant to `import` and borrow, *and* a standalone, runnable script with its own little demo or test code - all without those two jobs interfering with each other. Without the `+++if __name__ == "__main__":+++` guard, importing a module would also, unavoidably, run every last one of its "just testing this" print statements and demo calls, every single time.
+
+Remember the Mars Lander program from the appendix? Its very last line just calls `run_game(burn_array)` directly, with no guard at all. That's fine as a single, standalone program - but it does mean if you ever wanted to `import` those Mars Lander functions into a *different* program, just to reuse `compute_delta_v()` or `check_status()`, you'd immediately launch an entire, uninvited simulation the moment your `import` line ran. Wrapping that final call like this would fix it:
+
+[source]
+----
+if __name__ == "__main__":
+    run_game(burn_array)
+----
+
+Now the simulation only launches when you run that file directly - and anyone who wants to `import` just a function or two from it can do so safely, without triggering a whole game.
+
+[TIP]
+====
+* Take the `greetings.py` file from the Modules chapter
+* Add an `+++if __name__ == "__main__":+++` block at the bottom with a test call or two to `greet_user`
+* Run `greetings.py` directly, and confirm your test calls print
+* Then, from a second file, `import greetings` and confirm those same test calls *don't* print this time
+====
+
+You'll see `+++if __name__ == "__main__":+++` at the bottom of an enormous number of real Python files out in the wild. Now you know exactly what it's checking, and why it's there.
