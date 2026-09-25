@@ -61,10 +61,12 @@ print(L2) # -> 3
 print(L3) # -> 10
 ----
 
-=== Division and Remainder
+=== Division(s) and Remainder
 
-We know that we can do regular division. If have a simple program like this, we know
-what to expect:
+There are *two* types of division in Python: regular division and floor division. Plus, there is the remainder operator.
+
+We know that we can do regular division.
+If we have a simple program like this, we know what to expect:
 
 ----
 a = 6 / 3 # -> 2.0
@@ -73,9 +75,12 @@ a = 15 / 3 # -> 5.0
 a = 10 / 4 # -> 2.5
 ----
 
+Division always returns a floating-point number. It never returns an integer.
+
 === Floor Division
 
-Floor division is the same as regular division, but it rounds down to the nearest integer.
+Floor division is the same as regular division, but it rounds down to the nearest integer. It always returns an integer. *Always*.
+
 It is sometimes called Integer Division.
 
 ----
@@ -270,5 +275,5 @@ print(square_root_two)
 And notice, when we raise a number to the _0.5_ power, it's *the same as taking its square root!*.
 And that can be handy sometimes.
 
-You'll learn a lot more about working with numbers in your career as a coder.
+You'll learn a lot more about working with numbers in your career as a programmer.
 This is really just the very basics of the very beginnings.

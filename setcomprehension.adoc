@@ -1,0 +1,86 @@
+
+
+== Set Comprehensions
+
+We've built lists and dictionaries with comprehensions. Let's round out the trio with the *set comprehension* - and by now, the pattern should feel very familiar.
+
+=== Building a Set the Old Way
+
+Back in the Sets chapter, we cleaned up a list of duplicate weapon picks using `set()`.
+
+[source]
+----
+weapons_picked = ["sword", "bow", "sword", "axe", "bow"]
+
+unique_weapons = set(weapons_picked)
+
+print(unique_weapons)  # -> {'sword', 'bow', 'axe'}
+----
+
+That works great when you just want the unique items, unchanged. But what if you want to *transform* each item on the way in, the same way we did with list and dictionary comprehensions?
+
+=== The Set Comprehension Way
+
+[source]
+----
+donut_flavors = ["Chocolate", "GLAZED", "jelly", "chocolate"]
+
+lowercase_flavors = {flavor.lower() for flavor in donut_flavors}
+
+print(lowercase_flavors)
+# output is
+# {'chocolate', 'glazed', 'jelly'}
+----
+
+Look closely at what happened. We had four flavors, two of them really the same flavor just typed with different capitalization. By lowercasing each one *and* dropping it into a set, we ended up with exactly three truly unique flavors. A plain `for` loop building a list wouldn't have caught that duplicate on its own - the set part is doing real work here.
+
+The pattern looks just like a list comprehension, but wrapped in curly braces `{}` with a single expression, no colon:
+
+[source]
+----
+{expression for item in iterable}
+----
+
+That curly-brace syntax is shared with dictionary comprehensions, so how does Python know which one you mean? It comes down to whether you write one expression (a set) or two, separated by a colon (a dictionary).
+
+[source]
+----
+{x for x in range(5)}         # a set: {0, 1, 2, 3, 4}
+{x: x * x for x in range(5)}  # a dict: {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+----
+
+=== Filtering Into a Set
+
+Just like the other two comprehensions, you can add an `if` to only keep certain items.
+
+[source]
+----
+player_health_scores = [100, 87, 0, 42, 0, 87]
+
+unique_survivor_scores = {score for score in player_health_scores if score > 0}
+
+print(unique_survivor_scores)  # -> {100, 87, 42}
+----
+
+Notice the `87` only shows up once in the result, even though it appeared twice in the original list. That's the set doing what sets do best - guaranteeing uniqueness, automatically, even while you're transforming and filtering at the same time.
+
+[TIP]
+====
+* Start with a list of donut flavor names, with a few duplicates typed in different cases (like "Jelly" and "jelly")
+* Use a set comprehension to build a set of the unique flavors, all lowercased
+* Now add an `if` so only flavors longer than 5 letters make it into the set
+====
+
+=== Three Comprehensions, One Idea
+
+You've now seen the same core idea three times over:
+
+[cols=",,",options="header",]
+|===
+|Comprehension |Brackets |Produces
+|List |`[ ]` |An ordered collection, duplicates allowed
+|Dictionary |`{ }` with a `key: value` |Key:value pairs, unique keys
+|Set |`{ }` with one expression |Unique values, no particular order
+|===
+
+Once "expression, for, in, and maybe an if" clicks for one of them, it clicks for all three. That's the real payoff here - you're not learning three separate tricks, you're learning one very reusable way of thinking about building a new collection from an old one.

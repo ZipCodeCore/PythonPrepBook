@@ -1,0 +1,122 @@
+
+
+== Lambdas
+
+Back in the Functions chapter, you got a quick glimpse of something called a *lambda*. Let's slow down and really look at it, because you're about to see lambdas everywhere, especially in the next chapter.
+
+=== What Is a Lambda?
+
+A lambda is just a *function without a name*. That's really it. It's a small, one-line function you can write right where you need it, without going through the whole `def` ceremony.
+
+[source]
+----
+double = lambda x: x * 2
+
+print(double(5))  # -> 10
+----
+
+Compare that to writing it the regular way:
+
+[source]
+----
+def double(x):
+    return x * 2
+
+print(double(5))  # -> 10
+----
+
+Same result. The lambda version is just shorter - one line instead of two, no `def`, no `return`. Python quietly adds the `return` for you; whatever the expression evaluates to is automatically handed back.
+
+=== The Lambda Recipe
+
+Every lambda follows the same simple pattern:
+
+[source]
+----
+lambda parameters: expression
+----
+
+* `lambda` - the keyword that says "I'm making a tiny function"
+* `parameters` - whatever inputs it needs, just like a normal function (zero, one, or several)
+* `expression` - one single calculation, whose result gets returned automatically
+
+[source]
+----
+add2 = lambda p1, p2: p1 + p2
+print(add2(5, 7))  # -> 12
+
+shout = lambda word: word.upper() + "!"
+print(shout("watch out"))  # -> WATCH OUT!
+
+always_true = lambda: True
+print(always_true())  # -> True
+----
+
+Notice there's no name for the function itself in the `lambda` line - that's the "anonymous" part. We only gave it a name (`add2`, `shout`) by assigning it to a variable, the same way we'd name any other value.
+
+=== Why Bother?
+
+Fair question. If `def` already works, why does Python give you a second way to write functions?
+
+The honest answer: *lambdas exist for quick, throwaway functions you only need for a moment*, usually because some other function needs a little function handed to it as an argument. Writing out a whole `def`, giving it a name you'll never reuse, just to use it once, is a lot of ceremony for a one-off job.
+
+Think about `sorted()`, which you met in the Built-in Functions chapter. By default it sorts numbers and strings in their normal order. But what if we want to sort a list of players by their health score, where each player is a dictionary?
+
+[source]
+----
+players = [
+    {"name": "Sam", "health": 42},
+    {"name": "Jade", "health": 100},
+    {"name": "Sadie", "health": 87},
+]
+
+ranked = sorted(players, key=lambda player: player["health"])
+
+for p in ranked:
+    print(p["name"], p["health"])
+
+# output is
+# Sam 42
+# Sadie 87
+# Jade 100
+----
+
+That `key=lambda player: player["health"]` is telling `sorted()` exactly *what to look at* on each player when deciding the order. We needed a tiny function just for this one call - we're never going to reuse "look up a player's health" anywhere else in the program. A lambda lets us hand that logic straight to `sorted()` without ever giving it a name.
+
+=== The Catch
+
+Lambdas are deliberately limited, and that's on purpose:
+
+* A lambda can only hold *one expression* - no `if` statements with multiple lines, no loops, no several lines of logic.
+* A lambda always returns the result of that one expression - you never write the word `return` yourself.
+* If what you're trying to do needs more than a single simple calculation, that's Python's way of telling you: *just write a regular function with `def` instead.*
+
+[source]
+----
+# fine for a lambda - one simple expression
+square = lambda x: x * x
+
+# too much for a lambda - write a real function instead
+def grade_test(score):
+    if score >= 90:
+        return "A"
+    elif score >= 80:
+        return "B"
+    else:
+        return "C"
+----
+
+Trying to cram the `grade_test` logic into a lambda would just make your code harder to read, which defeats the entire purpose of using one.
+
+[TIP]
+====
+* Write a lambda called `is_even` that takes a number and returns `True` if it's even
+* Try it with a couple of numbers, printing the result each time
+* Now write the same thing as a regular `def` function, and compare how each one reads
+====
+
+=== A Quick Rule of Thumb
+
+Use a `def` function when you're naming something you'll call again, or when the logic takes more than one line to express. Reach for a `lambda` when you need a tiny, use-once function, usually as an argument being passed straight into something else, like `sorted()`.
+
+Keep that rule of thumb in mind, because in the next chapter, you're going to see lambdas paired constantly with two more built-in functions: `map()` and `filter()`.

@@ -2,11 +2,12 @@
 == Conditional Statements
 
 We have been seeing programs which consist of a list of statements, one after another, where the "flow of control" goes from one line to the next, top to bottom, and so on to the end of the list of lines.
+
 There are more useful ways of breaking up the "control flow" of a program. Python has several conditional statements that the programmer do things based on conditions in the data. 
 
 === If statement
 
-The first conditional statement  is the *if* statement.
+The first conditional statement is the *if* statement.
 
 [source]
 ----

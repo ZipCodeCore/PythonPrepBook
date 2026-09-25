@@ -1,0 +1,115 @@
+
+
+== Advanced Built-in Functions
+
+A couple of chapters back, we covered the built-in functions you'll use constantly, without much thought. And in the last chapter, you got comfortable with lambdas - those small, throwaway, one-line functions. Now let's put lambdas to work, alongside a handful of built-in functions that let you test or transform an *entire collection* in one line, instead of writing out a `for` loop by hand every time.
+
+These aren't harder to use than what you've already seen, they're just a bit less obvious *why* you'd want them, until you've hit the problem they solve. So let's hit those problems.
+
+=== Testing a Whole Collection at Once
+
+`any()` and `all()` save you from writing a bunch of `and`/`or` chains by hand, when what you really want to know is something about a *whole group* of true/false values.
+
+`all()` checks whether *every single item* in a collection is `True`. If even one item is `False`, the whole thing is `False`.
+
+[source]
+----
+players_alive = [True, True, True]
+print(all(players_alive))  # -> True, everybody made it!
+
+players_alive = [True, False, True]
+print(all(players_alive))  # -> False, someone didn't make it.
+----
+
+`any()` checks whether *at least one* item is `True`. It only comes back `False` if every single item is `False`.
+
+[source]
+----
+players_alive = [False, False, True]
+print(any(players_alive))  # -> True, at least one player survived!
+
+players_alive = [False, False, False]
+print(any(players_alive))  # -> False, nobody made it. Game over.
+----
+
+These come in especially handy paired with a quick list of boolean expressions, so you can check a whole batch of conditions in one line instead of writing them all out with `and` or `or`.
+
+[source]
+----
+checks = [
+    fuel_available > 0,
+    altitude > 0,
+    pilot.is_alive()
+]
+
+if all(checks):
+    print("Cleared for takeoff!")
+----
+
+=== Applying a Function to an Entire List
+
+`map()` takes a function and a list, and runs that function on *every single item* in the list, handing you back the results. It saves you from writing out a `for` loop just to transform each item the same way.
+
+[source]
+----
+player_health_scores = [100, 87, 42]
+
+def apply_shield_bonus(score):
+    return score + 10
+
+boosted_scores = list(map(apply_shield_bonus, player_health_scores))
+print(boosted_scores)  # -> [110, 97, 52]
+----
+
+Notice we had to wrap it in `list()`. That's because `map()` doesn't hand you back a list directly - it hands you back something called a *map object*, which is really just a promise to compute those values when you actually ask for them. Wrapping it in `list()` says "okay, compute them now, and give me a real list."
+
+You'll often see `map()` paired with a `lambda`, since the function you're applying is frequently a small, throwaway one.
+
+[source]
+----
+donut_prices = [1.50, 1.75, 2.00]
+
+prices_with_tax = list(map(lambda price: price * 1.06, donut_prices))
+print(prices_with_tax)  # -> [1.59, 1.855, 2.12]
+----
+
+=== Filtering a List
+
+`filter()` is `map()`'s close cousin. Instead of transforming every item, it *keeps only the items that pass a test*, throwing the rest away.
+
+[source]
+----
+player_health_scores = [100, 87, 0, 42, 0]
+
+def is_still_alive(score):
+    return score > 0
+
+survivors = list(filter(is_still_alive, player_health_scores))
+print(survivors)  # -> [100, 87, 42]
+----
+
+Just like `map()`, `filter()` needs a function that returns `True` or `False` for each item, and just like `map()`, you'll usually wrap the result in `list()` to see it plainly. And just like `map()`, a `lambda` often does the job without needing a separate named function at all.
+
+[source]
+----
+donut_flavors = ["chocolate", "glazed", "jelly", "chocolate glaze"]
+
+chocolatey_ones = list(filter(lambda flavor: "chocolate" in flavor, donut_flavors))
+print(chocolatey_ones)  # -> ['chocolate', 'chocolate glaze']
+----
+
+Between `map()` (transform everything) and `filter()` (keep only some things), you can do an enormous amount of list-wrangling without ever writing a manual `for` loop.
+
+[TIP]
+====
+* Start with a list of five player health scores, mixing in a couple of zeros for "fallen" players
+* Use `filter()` to build a list of only the survivors
+* Use `map()` on that survivor list to give everyone a `+5` health bonus
+* Use `all()` to check whether every remaining survivor now has more than 50 health
+====
+
+=== Keep Exploring
+
+Between the last chapter and this one, we've covered a solid dozen of Python's built-in functions, but there are dozens more out there, quietly waiting to make your life easier. The real lesson isn't "memorize this list." It's this: *before you write ten lines of code to solve a problem, check if Python already gave you a built-in function that does it in one.* More often than you'd think, it already has.
+
+Coming up next, we'll look at *comprehensions* - Python's even shorter, and arguably more popular, way to do what `map()` and `filter()` just did for us.

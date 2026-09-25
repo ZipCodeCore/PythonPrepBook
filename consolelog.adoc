@@ -36,7 +36,7 @@ Car's Speed:  55
 
 as the program's output.
 
-Cool, huh? The ability to communicate with you is one of Python's most fundamental capabilities. And you've run two Python programs. Congratulations, you're a coder. (Well, at least for today you are.)
+Cool, huh? The ability to communicate with you is one of Python's most fundamental capabilities. And you've run two Python programs. Congratulations, you're a programmer. (Well, at least for today you are.)
 
 == Comments
 
@@ -99,11 +99,12 @@ Each of these lines is something we'd like Python to *compute* for us. That comp
 
 *Arithmetic expressions* are, as their name implies, something that require arithmetic to get the answer. An expression like "5 + 8 - 3" gets _evaluated_ to 10.
 
-*Boolean expressions* result in either a True or a False value. Example: "max_speed > 500.0" - this is either true or false depending on the value of max_speed.
+*Boolean expressions* result in either a True or a False value. Example: "max_speed > 500.0" - this evaluates to either true or false depending on the value of max_speed.
 
 === Statements
 
 A *statement* is just a line of Python.
+All python statements have very specific patterns.
 
 [source]
 ----
@@ -117,6 +118,8 @@ sales_tax = total_groceries * sales_tax_rate
 charge_to_card = total_groceries + sales_tax
 ----
 And this is what a Python program looks like. It's just a list of statements, one after the other, that get computed from the top down.
+
+This is referred to control flow. The first statement is executed, then the second, and so on, until the program reaches the end.
 
 Some of the statements have expressions in them (like total_groceries * sales_tax_rate), while some are just simple *assignment* statements (like total_groceries = 38.99, where we assign the variable 'total_groceries' the value 38.99).
 Don't panic. These are just some simple examples of Python to give you a feel for it.
@@ -141,10 +144,8 @@ When you come across code that goes onto multiple lines, do like Python does, lo
 
 Very often in Python, we will see a *block* of statements. It is a list of statements _indented_ the same amount. (Yes, unlike many languages, in Python, _white space is important_.) It acts like a container to make clear what statements are included in the block.
 
-It is _so important_ that indentation, and making sure you have everything aligned properly, is one of the most important thing to learn about Python when you are a beginner.
-Many a beginner discovers that the braces _{ }_ that other languages use to manage the way code is grouped together are missing from Python. Java, JavaScript, and many other languages use braces to handle how code gets grouped together.
-
-Not Python, that's why is _SO_ very important to get it right.
+It is _so important_ that *indentation* and *making sure you have everything aligned properly* is *one of the most important things to learn* about Python when you are a beginner.
+Many beginners discover that the braces _{ }_ that other languages use to manage the way code is grouped together are missing from Python. Java, JavaScript, and many other languages use braces to handle how code gets grouped together.
 
 [source]
 ----
@@ -160,6 +161,10 @@ if (mage_power > 120.0):
 # some more code
 print(mage_power, "is your Mage's Power rating.")
 ----
+
+**Python does not use braces to group code together. Instead, it uses indentation.**
+
+Not Python, that's why is _SO_ *very important* to get it right.
 
 See those SPACES (and confusingly, they might be TABs but you cannot tell that by looking at the line).
 All the indented lines below the IF statement are part of what gets run when the IF is True.

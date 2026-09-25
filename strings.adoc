@@ -241,5 +241,5 @@ rev = res[::-1] # -> POTS
 print(rev) # -> POTS
 ----
 
-Strings are perhaps the most important data type in almost any language. Being able to manipulate them easily and do powerful things with them in Python, makes you a better coder.
+Strings are perhaps the most important data type in almost any language. Being able to manipulate them easily and do powerful things with them in Python, makes you a better programmer.
 

@@ -8,7 +8,7 @@ Let's start with *why* we need them.
 
 Imagine you have a small number of things you want to track. Let's use our vague computer game we've been using for an example. The game has 5 players, friends that get together over the internet to play a dungeon game.
 
-Now, if you're the coder of this game you could keep track of each player's health_score by have 5 different variables. (for players Zero to Four)
+Now, if you're the programmer of this game you could keep track of each player's health_score by have 5 different variables. (for players Zero to Four)
 
 [source]
 ----
@@ -60,7 +60,7 @@ Lists:
 
 * Can store multiple values in a single variable
 * Start counting from index position zero
-* Elements can be primitive data types or/and Objects
+* Elements can be builtin data types or/and Objects
 
 So let's think about an list of donuts for the following examples.
 

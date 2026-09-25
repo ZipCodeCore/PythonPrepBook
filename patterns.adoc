@@ -1,7 +1,7 @@
 
 == Code Patterns
 
-Any experienced coder would say that the ability to see patterns in code, remember them, and learn from them when creating code is another kind of 'superpower'.
+Any experienced programmer would say that the ability to see patterns in code, remember them, and learn from them when creating code is another kind of 'superpower'.
 The following samples are really simple techniques, but they show some common ways of doing things that you should think about and study. 
 In almost all these examples, there may be some missing variable declarations.
 Just roll with it. 
@@ -110,7 +110,7 @@ for i in range(1, n):
 
 === List Patterns
 
-Lists are often something that confuses beginning coders. Let's look at some code patterns with lists that you see how lists and loops can work together to get a lot of work pretty easily.
+Lists are often something that confuses beginning programmers. Let's look at some code patterns with lists that you see how lists and loops can work together to get a lot of work pretty easily.
 
 The list we are going to use in all these cases is pretty simple. It's a list of 7 numbers.
 

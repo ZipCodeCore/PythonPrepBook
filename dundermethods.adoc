@@ -1,0 +1,154 @@
+
+
+== Dunder Methods
+
+In the last chapter, our `Spacecraft` class had two methods that looked a little strange: `__init__` and `__str__`. Those double underscores on both sides aren't a typo, and they aren't decoration. They're Python's way of marking a method as special. Programmers call these *dunder methods* - short for "Double UNDERscore" - and this chapter is all about what they are and why they matter.
+
+=== What Makes a Method a "Dunder"
+
+Any method whose name starts and ends with two underscores, like `__init__` or `__str__`, is a dunder method. You don't invent these names yourself - Python has a fixed list of them, and each one has a specific job. What makes them special is that you almost never call them directly. Instead, *Python calls them for you*, automatically, in response to something else you do to the object - creating it, printing it, comparing it, and so on.
+
+Think of dunder methods as hooks. You write the hook, and Python promises to pull it at just the right moment.
+
+=== `__init__`: The Constructor You Already Know
+
+You met this one last chapter, but let's call it out by name: `__init__` is called automatically the *instant* you create a new object. It's where you set up all of an object's starting values.
+
+[source]
+----
+class Spacecraft:
+    def __init__(self, name, topspeed):
+        self.name = name
+        self.topspeed = topspeed
+        self.current_speed = 0
+
+enterprise = Spacecraft("Enterprise", 9.9)
+print(enterprise.name)       # -> Enterprise
+print(enterprise.topspeed)   # -> 9.9
+----
+
+Notice we didn't have to set `enterprise.name = "Enterprise"` on a separate line afterward, like we did before `__init__` showed up. Passing `"Enterprise"` and `9.9` straight into `Spacecraft(...)` hands them right to `__init__`, which tucks them away on `self`. `__init__` is a dunder, but it's such a common one you'll write it in almost every class you ever build.
+
+=== `__str__`: Controlling How print() Sees You
+
+You also met `__str__` last chapter. It's the hook that Python pulls whenever your object needs to be turned into a readable string - most commonly, when you `print()` it.
+
+[source]
+----
+class Spacecraft:
+    def __init__(self, name, topspeed):
+        self.name = name
+        self.topspeed = topspeed
+
+    def __str__(self):
+        return "Starship " + self.name
+
+enterprise = Spacecraft("Enterprise", 9.9)
+print(enterprise)
+# -> Starship Enterprise
+----
+
+Without `__str__`, `print(enterprise)` would spit out something ugly and unhelpful, like `<__main__.Spacecraft object at 0x103013100>`. With it, you decide exactly what shows up.
+
+=== `__eq__`: Teaching Python What "Equal" Means
+
+By default, Python considers two objects equal only if they are *literally the same object* in memory - not just similar, but the exact same one.
+
+[source]
+----
+enterprise = Spacecraft("Enterprise", 9.9)
+enterprise_copy = Spacecraft("Enterprise", 9.9)
+
+print(enterprise == enterprise_copy)  # -> False, even though they look identical!
+----
+
+That's often not what we want. If two spacecraft have the same name, we probably want `==` to say they're equal. That's what `__eq__` is for.
+
+[source]
+----
+class Spacecraft:
+    def __init__(self, name, topspeed):
+        self.name = name
+        self.topspeed = topspeed
+
+    def __eq__(self, other):
+        return self.name == other.name
+
+enterprise = Spacecraft("Enterprise", 9.9)
+enterprise_copy = Spacecraft("Enterprise", 9.9)
+
+print(enterprise == enterprise_copy)  # -> True now!
+----
+
+`__eq__` takes two things to compare: `self` (the object on the left of `==`) and `other` (the object on the right). Whatever expression you return becomes the answer to "are these equal?"
+
+=== `__len__`: Letting Your Object Work With len()
+
+Remember `len()`, from way back in the Built-in Functions chapter? It works on strings, lists, dicts, and sets - and it can work on *your own* classes too, if you define `__len__`.
+
+[source]
+----
+class Fleet:
+    def __init__(self, ships):
+        self.ships = ships
+
+    def __len__(self):
+        return len(self.ships)
+
+home_fleet = Fleet(["Enterprise", "Constellation", "Defiant"])
+
+print(len(home_fleet))  # -> 3
+----
+
+Whatever number `__len__` returns is exactly what `len()` hands back to whoever calls it. This is a small example of a bigger idea: dunder methods are how your *own* classes get to plug into Python's built-in functions and operators, instead of only working with Python's built-in types.
+
+=== `__add__`: Teaching Python What "+" Means for You
+
+That same idea applies to operators, not just functions. `__add__` controls what happens when your object is used on the left side of a `+`.
+
+[source]
+----
+class Fleet:
+    def __init__(self, ships):
+        self.ships = ships
+
+    def __add__(self, other):
+        return Fleet(self.ships + other.ships)
+
+    def __len__(self):
+        return len(self.ships)
+
+home_fleet = Fleet(["Enterprise", "Constellation"])
+reserve_fleet = Fleet(["Defiant"])
+
+combined_fleet = home_fleet + reserve_fleet
+
+print(len(combined_fleet))  # -> 3
+----
+
+Without `__add__`, writing `home_fleet + reserve_fleet` would just crash with an error, since Python has no idea how to "add" two `Fleet` objects together. With it, you decide what `+` should mean for your own class.
+
+=== A Quick Reference
+
+[cols=",,",options="header",]
+|===
+|Dunder Method |Gets Called When... |Common Use
+|`__init__` |An object is created |Setting up starting values
+|`__str__` |The object is printed, or turned into a string |A friendly, readable description
+|`__eq__` |Two objects are compared with `==` |Deciding what "equal" means for your class
+|`__len__` |`len()` is called on the object |Reporting some meaningful "size"
+|`__add__` |Two objects are combined with `+` |Deciding what "adding" means for your class
+|===
+
+[TIP]
+====
+* Add a `__len__` method to a `Player` class that returns how many items are in that player's inventory list
+* Add an `__eq__` method that considers two players equal if they have the same name
+* Try `len(player)` and `player_one == player_two` and see your dunder methods kick in
+====
+
+=== Why This Matters
+
+Here's the big idea to walk away with: dunder methods are the bridge between *your own* custom classes and all the built-in syntax and functions you've already learned throughout this book - `print()`, `len()`, `==`, `+`, and plenty more we haven't shown here. You're not learning a pile of odd, unrelated tricks. You're learning the *one mechanism* Python uses, over and over, to let your objects behave like they belong in the language, right alongside strings, lists, and dictionaries.
+
+You won't need most dunder methods most of the time. But `__init__` and `__str__` will show up in nearly every class you write from here on out, so make sure those two, at least, feel like old friends.

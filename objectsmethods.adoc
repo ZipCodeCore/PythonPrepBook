@@ -1,16 +1,23 @@
 
-== Objects
+== Objects/Instances
 
-There are only a few data types in Python. All but one of them are called “primitive” data types, because their values contain only a single thing (be it a string or a number or whatever).
+There are a series if key data types pre-defined (builtin) to Python. The key primaries: "int", "float", "str", "bool", "None".
+And there are the "sequence" types: "list", "tuple", "range".
+Several can also be thought of as "container" types: "list", "tuple","dict", "set", "frozenset".
 
-Python is an object oriented programming language.
-Almost everything in Python is an object, with its properties and methods.
-A Class is like an object constructor, or a "blueprint" for creating objects.
+All of these are actually Classes in Python.
+They are all built-in classes, and are available to use without any special syntax.
 
-So you write "classes", and then when you run the code, Python then creates the objects to be used by the code.
+Moreover, Python is an object oriented programming language.
+Everything in Python is an object, with its properties/attributes and methods.
+A Class is an object constructor, or a "blueprint" for creating objects.
 
-Objects are used to collect and organize data - and that data can be variable values, functions and other things. 
-Objects can also contain other objects(!), in kind of a "nesting" way. 
+So you write "classes", and then when you run the code, Python then creates the objects/instances to be used by the code.
+
+NOTE: You'll see both words used - *object* and *instance* - and they mean the same thing. When you create an object from a class, programmers usually say you've "created an instance of that class." So "object" and "instance" are really just two names for the same idea, and you'll see both used throughout this book (and in Python's own error messages).
+
+Objects are used to collect and organize data - and that data can be variable values, functions and other things.
+Objects can also contain other objects(!), in kind of a "nesting" way.
 This allows for large data structures to be built using a very simple and elegant mechanism.
 
 
@@ -19,14 +26,14 @@ This allows for large data structures to be built using a very simple and elegan
 class Spacecraft:
     name = ""
     type = 'warp starship'
-    topspeed = 9.9 
+    topspeed = 9.9
 
 
 ----
 
 === Object Creation
 
-We can imagine an object as a container where everything is collected about some thing in the program:
+We can imagine an object - an instance of a class - as a container where everything is collected about some thing in the program:
 
 [source]
 ----
@@ -41,14 +48,16 @@ Which isn't very helpful, is it? We need to create a _method_ in our class. One 
 [source]
 ----
 class Spacecraft:
-    name = ""
-    type = 'warp starship'
-    topspeed = 9.9 
-    
+    def __init__(self):
+        self.name = ""
+        self.type = 'warp starship'
+        self.topspeed = 9.9
+        self.current_speed = 0
+
     def __str__(self):
         return "Starship " + self.name
 
-    def speed(self):
+    def tp_speed(self):
         return self.topspeed
 
 enterprise = Spacecraft()
@@ -59,7 +68,9 @@ print(enterprise)
 # we get: Starship Enterprise
 ----
 
-There a few things to point out in this class. First, notice how the __str__ function is indented? It's defined _inside_ the class. That makes the function a _method_; objects have methods. You can call a method on a particular object.
+There a few things to point out in this class. First, notice how the functions are indented? Those functions are defined _inside_ the class. That makes the function a _method_; objects have methods. You can call a method on a particular object.
+
+Also notice that first parameter, `self`, on every method. `self` is how a method knows *which instance* it's being called on - when you call `enterprise.tp_speed()`, Python quietly hands `tp_speed` the `enterprise` instance as `self`, so `self.topspeed` reaches into that specific instance's data, not some other spacecraft's.
 
 [source]
 ----
@@ -77,14 +88,4 @@ cts = constellation.speed()
 # ets will be 9.9, cts will be 9.2
 ----
 
-This example also shows how you use a class to create multiple objects. It helps with making code simpler, and easier to follow when reading it.
-
-=== Follow Ons
-
-There are a number of very powerful things we have left out of this discussion about Python objects.
-We have not covered the ideas of *inheritance* or the idea of *subclassing*.
-And there is much more in Python about objects. 
-Master what we've written about here and then forge ahead into more complicated and powerful capabilities.
-
-There is a lot more to learn about Python.
-
+This example also shows how you use a class to create multiple objects. `enterprise` and `constellation` are two separate *instances* of `Spacecraft` - each one built from the very same blueprint, but each holding its own, independent set of values. Changing `constellation.topspeed` had no effect at all on `enterprise`. Using a class this way helps with making code simpler, and easier to follow when reading it.

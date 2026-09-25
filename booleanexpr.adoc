@@ -119,7 +119,7 @@ customer.can_transfer_from_savings() )
 
 See how these conditions could line up to allow a customer to 
 get cash from the cash machine? Again, this is *why* boolean expressions are important and powerful and
-why coders need to be able to use them to get the software *just right*.
+why programmers need to be able to use them to get the software *just right*.
 
 
 [TIP]

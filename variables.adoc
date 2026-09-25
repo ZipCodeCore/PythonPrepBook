@@ -63,7 +63,7 @@ cats = 3
 print(cats)  # -> 3
 
 dogs = 1
-print(cats)  # -> 1
+print(dogs)  # -> 1
 
 player1alive = true
 carspeed = 55.6
@@ -152,12 +152,12 @@ Python can keep track of a number of different kinds of data, and these are know
 as "data types". Here are a few of them.
 
 * *Numeric* - there are two kinds of numbers: integers, floats and complex
-** *Whole Numbers* -*int* are like 0, -4, 5, 6, 1234
+** *Whole Numbers* - *int* are like 0, -4, 5, 6, 1234
 ** *Decimal Numbers* - *float* are numbers where the decimals matter like  0.005, 1.7, 3.14159, -1600300.4329
-** *Complex* are, well, if you don't already know, let's ignore them.
+** *Complex* are, well, if you don't already know, let's ignore them. _But, I should make a joke about how there are two kinds of number and then then show three kinds, and mumble something about an 'off-by-one' bug._
 * *Strings* - *str* - a _string_ of characters -
-** like 'text' or "Hello, World!"
-* *Boolean* - is either *True* or *False*
+** like 'text' or "Hello, World!" or 'Wow, I really like Python!'
+* *Boolean* - *bool* - is either *True* or *False*
 ** often used to decide things like is_player(1).alive() [True or False?]
 * *None* - no value at all (nil or null in other languages)
 
@@ -180,7 +180,7 @@ print(type(s)) # -> <class 'str'>
 
 [TIP]
 ====
-Create variables for each primitive data type:
+Create variables for each builtin data type:
 
 - boolean,
 - float,
@@ -212,5 +212,6 @@ a normal value to it.
 
 === Data Structures
 
-Python has a series of different _data structures_ built into the language.
-Its built-in data structures include lists, tuples, sets, and dictionaries.
+Python has a series of different _data structures_ built into the language. These are also referred to as _collections_.
+Its built-in data structures include *lists*, *tuples*, *sets*, and *dictionaries*.
+We will cover each one in turn in later chapters.

@@ -5,7 +5,7 @@ The *for* loop is more complex, but it’s also the most commonly used loop.
 
 In Python, the for loop is very powerful. It has a number of different forms, including one which is remarkably simple.
 
-Maybe we have a list of donuts. 
+Maybe we have a list of donuts.
 And we want to print out each one.
 
 [source]
@@ -39,7 +39,7 @@ for index in range(len(list_of_donuts)):
 
 Here the index was set to 0 and then 1, and then 2, and the index was used to retrieve from the list the donut name at the index. list_of_donuts[1] is "glazed". This example's out is the same as the for-each loop above.
 
-Let's use range() is much more common usage.
+Let's use *range()* is much more common usage.
 
 Here's one where we go from 0 to 4.
 
@@ -58,12 +58,12 @@ Now say we wanted to print out the sum of all the numbers from 1 to 10.
 ----
 # performing sum of 1 to 10
 sum = 0
-for i in range(1, 11): 
-    sum = sum + i 
+for i in range(1, 11):
+    sum = sum + i
 print("Sum of first 10 natural numbers is ", sum)
 ----
 
-Wait! Notice how we have to ask range to *one beyond* the last number we want added to the sum! 
+Wait! Notice how we have to ask range to *one beyond* (11) the last number we want added to the sum!
 That's because the range starts at 0 and includes every whole number up to, but *not including*, the number that you have provided as the stop number.
 
 There are three versions to the range()'s mechanism.
@@ -102,4 +102,3 @@ Look, we had to range(10, 0, -1) to get the one to print. Otherwise if we had ha
 
 The *range()* function gets used a lot in Python, and is the envy of many programmers in other languages who have use the *for* loop that was handed down from the C programming language.
 So use it widely, and don't gloat -- too much :-)
-
