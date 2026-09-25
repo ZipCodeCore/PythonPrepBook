@@ -37,9 +37,9 @@ While loops work well in situations where the condition you are testing at the t
 of the loop is one that may not be related to a simple number. 
 
 ----
-while (player[1].isAlive() == True):
-    player[1].takeTurn()
-    game.updateStatus(player[1])
+while (player[1].is_alive() == True):
+    player[1].take_turn()
+    game.update_status(player[1])
 ----
 
 This will keep letting player[1] take a turn in the game until the player dies. Another way to do something like this is with an _infinite loop_. 
@@ -47,20 +47,20 @@ This will keep letting player[1] take a turn in the game until the player dies. 
 We're going to use both *continue* and *break* in this example, and we will describe them better after we're done with loops.
 
 ----
-player = game.newPlayer()
+player = game.new_player()
 
 while (true):  # <- notice right here, an infinite loop
 
-    player.takeTurn()
-    game.updateScores()
-    game.advanceTime()
+    player.take_turn()
+    game.update_scores()
+    game.advance_time()
 
-    if (player.isAlive() == true):
+    if (player.is_alive() == true):
         continue # start at top of loop again.
     else:
         break # breaks out of loop and ends game.
 
-game.sayToHuman("Game Over!")
+game.say_to_human("Game Over!")
 ----
 
 Here, we are using the continue statement to force the flow of control to the top of the loop if the player is still alive after the 'take turn' code. We are also using the break statement to break out of the infinite loop when the player dies, letting us do other things after the player has 'died'.

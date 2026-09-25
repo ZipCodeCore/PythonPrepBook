@@ -3,11 +3,19 @@
 
 === Variables
 
-In Python, variables are containers used to store data while the program is running. Variables can be named just about anything, and often are named things that make you think about what you store there.
+A variable in Python is best understood as a *name that points at a value* — not a box that contains one.
+This distinction sounds pedantic the first time you hear it, and then becomes the thing that saves you from real confusion a few chapters from now, once two different names can point at the *same* value at the same time.
+For now, the practical consequence is simpler: a name is just a label, and Python does not care at all what you call something.
+It cares what the something *is*.Variables can be named just about anything, and often are named things that make you think about what you store there.
 
-Think of them as little boxes you can put data into, to keep it there and not lose it.
+[source]
+----
+ratings = [4.5, 3.0, 5.0, 4.0]
+cats = 3
+cat_name = 'Fluffy'
+----
 
-There are some rules about variables. 
+There are some rules about variable names.
 
 - All Variables must be named.
 - Names can contain letters, digits, and underscores
@@ -23,17 +31,17 @@ So this means the following are fine for variable names in Python:
 x
 AREA
 height
-Width
-currentScore
-playerOne
-playerTwo
-sumOfCredits
-_lastPlay
-isPlayerAlive
+width
+current_score
+player_one
+player_two
+sum_of_credits
+_last_play
+is_player_alive
 ----
 
 And uppercase and lowercase letters are different.
-So each of these are DIFFERENT variables even 
+So each of these are DIFFERENT variables even
 though they are based on the same word(s).
 
 [source]
@@ -87,8 +95,8 @@ x = "nineteen"
 print(x) # -> nineteen
 ----
 
-Notice how we assign "nineteen" to _x_. We can assign (re-assign) to a variable as many times as
-we might need to.
+Notice how we assign "nineteen" to _x_.
+We can assign (re-assign) to a variable as many times as we might need to.
 
 [source]
 ----
@@ -100,11 +108,12 @@ age = age + 1
 print(age); # -> 5
 ----
 
-Notice here how _age's_ current value is used, added one to it, and re-assigned *back into the variable* _age_.
+Notice here how _age's_ current value is used, added one to it, and re-assigned *back to the variable* _age_.
 
-Now, one of the weird (to me anyway) things Python can do is change the type of a variable while the program is running.
-A lot of languages won't you do this. But it can be handy in Python.
-In Python, variables are dynamic (can contain any data) which means a variable can be a string and later be a number.
+Now, one of the weird (to me anyway) things Python can do is a variable to point to *any* kind of item, while the program is running.
+A lot of languages won't you do this.
+But it can be handy in Python.
+In Python, variables are dynamic (can reference any data object) which means a variable can be a string now and later be a number.
 
 [source]
 ----
@@ -117,7 +126,7 @@ print(height) # -> very tall
 # and then it's a string.
 ----
 
-_You can't see it, but I am slowly shaking my head in disbelief. Some day, maybe I'll explain why._
+_You can't see it, but I am slowly shaking my head in disbelief. Some day, maybe I'll explain why. Or maybe you'll explain it to me._
 
 === Constants
 
@@ -131,9 +140,9 @@ GRAVITY = 9.8
 ----
 They are _usually_ declared in a file named 'constants.py'.
 
-Note: In reality, we don't use constants in Python. 
-(The language _doesn't_ have them.) 
-Naming them in all capital letters is a convention to separate them from variables, however, it does not actually prevent reassignment. 
+Note: In reality, we don't use constants in Python.
+(The language _doesn't_ have them.)
+Naming them in all capital letters is a convention to separate them from variables, however, it does not actually prevent reassignment.
 So be careful.
 
 
@@ -143,48 +152,59 @@ Python can keep track of a number of different kinds of data, and these are know
 as "data types". Here are a few of them.
 
 * *Numeric* - there are two kinds of numbers: integers, floats and complex
-** *Integers* are like 0, -4, 5, 6, 1234
-** *Floats* are numbers where the decimals matter like  0.005, 1.7, 3.14159, -1600300.4329
+** *Whole Numbers* -*int* are like 0, -4, 5, 6, 1234
+** *Decimal Numbers* - *float* are numbers where the decimals matter like  0.005, 1.7, 3.14159, -1600300.4329
 ** *Complex* are, well, if you don't already know, let's ignore them.
-* *str* - a _string_ of characters - 
+* *Strings* - *str* - a _string_ of characters -
 ** like 'text' or "Hello, World!"
 * *Boolean* - is either *True* or *False*
-** often used to decide things like isPlayer(1).alive() [True or False?]
+** often used to decide things like is_player(1).alive() [True or False?]
 * *None* - no value at all (nil or null in other languages)
 
 It is common for a computer language to want to know if data is a bunch numbers or text. Tracking
-what _type_ a piece of data is is very important. And it is the programmer's job to make sure all the 
-data get handled in the right ways. 
+what _type_ a piece of data is is very important. And it is the programmer's job to make sure all the
+data get handled in the right ways.
 
-So Python has a few fundamental *data types* that it can handle. And we will cover each one in turn. 
+So Python has a few fundamental *data types* that it can handle. And we will cover each one in turn.
+Any variable can be handed to the **type()** builtin functions and it will tell you what type the variable references.
+
+[source]
+----
+x = 42
+print(type(x)) # -> <class 'int'>
+r = 3.14
+print(type(r)) # -> <class 'float'>
+s = 'Hello, World!'
+print(type(s)) # -> <class 'str'>
+----
 
 [TIP]
 ====
 Create variables for each primitive data type:
 
-- boolean, 
-- float, 
-- integer, 
-- str 
+- boolean,
+- float,
+- integer,
+- str
 
 Store a value in each.
 ====
 
 [source]
 ----
-# Here are some samples. 
+# Here are some samples.
 
 # integer
 x = 0
 
 # boolean
-playerOneAlive = True
+player_one_alive = True
 
 # float
-currentSpeed = 55.0
+current_speed = 55.0
 
 # string
-playerOneName = 'Rocco'
+player_one_name = 'Rocco'
 ----
 
 Now, you try it. Write down a variable name and assign
@@ -192,6 +212,5 @@ a normal value to it.
 
 === Data Structures
 
-Python has a series of different _data structures_ built into the language. 
+Python has a series of different _data structures_ built into the language.
 Its built-in data structures include lists, tuples, sets, and dictionaries.
-

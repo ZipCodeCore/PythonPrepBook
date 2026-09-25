@@ -78,7 +78,7 @@ The word trigonometry comes from the Greek words, trigonon ("triangle") + metron
 We use trigonometry to find angles, distances and areas.
 
 For example, if we wanted to find the area of a triangular piece of land, we could use the
-equation *AreaOfaTriangle = height * base / 2*
+equation *area_of_a_triangle = height * base / 2*
 
 Therefore we just need to create variables for each and use the operators to calculate the area.
 
@@ -94,8 +94,8 @@ Formula: A = h * b / 2
 ----
 height = 20
 base = 10	
-areaOfaTriangle  =  height * base / 2
-print(areaOfaTriangle) # -> 100
+area_of_a_triangle  =  height * base / 2
+print(area_of_a_triangle) # -> 100
 ----
 
 

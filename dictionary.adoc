@@ -25,7 +25,7 @@ Modifying a dictionary and getting values from them is very easy.
 [source]
 ----
 # get Sam's number
-currentPhone = phonenumbers["Sam"]
+current_phone = phonenumbers["Sam"]
 
 # we can also update a value
 phonenumbers['Jade'] = 6551439
@@ -60,10 +60,10 @@ And one of the very cooler aspects is the testing of whether or not a key is in 
 [source]
 ----
 if 'Sam' in phonenumbers: # -> True
-    doSomething()
+    do_something()
 
 if 'Guido' not in phonenumbers: # -> False
-    figureOutWhyNot()
+    figure_out_why_not()
 ----
 
 We could use them to hold information about some object we're holding data about.

@@ -1,7 +1,12 @@
 
 == Arithmetic Operators
 
-Python can do math. And many early programming problems you will come across deal with doing fairly easy math. There are ways to do lots of useful things with numbers. 
+Python can do math.
+
+That should not surprise you.
+
+And many early programming problems you will come across deal with doing fairly easy math.
+There are ways to do lots of useful things with numbers.
 
 === Basics
 
@@ -12,6 +17,7 @@ Python can do math. And many early programming problems you will come across dea
 |- |Subtraction |Subtract one from another
 |* |Multiplication |Multiply 2 values
 |/ |Division |Divide 2 numbers
+|// |Floor Division |Divide 2 numbers
 |% |Modulus |returns the remainder
 |===
 
@@ -57,15 +63,35 @@ print(L3) # -> 10
 
 === Division and Remainder
 
-We know that we can do regular division. If have a simple program like this, we know 
+We know that we can do regular division. If have a simple program like this, we know
 what to expect:
 
 ----
-a = 6 / 3 # -> 2
-a = 12 / 3 # -> 4
-a = 15 / 3 # -> 5
+a = 6 / 3 # -> 2.0
+a = 12 / 3 # -> 4.0
+a = 15 / 3 # -> 5.0
 a = 10 / 4 # -> 2.5
 ----
+
+=== Floor Division
+
+Floor division is the same as regular division, but it rounds down to the nearest integer.
+It is sometimes called Integer Division.
+
+----
+a = 6 // 3 # -> 2
+a = 13 // 3 # -> 4
+a = 17 // 3 # -> 5
+a = 10 // 4 # -> 2
+----
+
+It's important to note that last one; `10 // 4` is 2.
+Why?
+Floor division is the same as regular division, but it rounds down to the nearest integer.
+
+For example, `10 / 4` is 2.5, but `10 // 4` is 2.
+
+=== Remainder Operator
 
 But sometimes, we have a need to know what the remainder of a division is.
 The remainder operator %, despite its appearance, is not related to percents.
@@ -79,7 +105,7 @@ Now what's this about '%' (the remainder) operator?
 
 [source, js]
 ----
-a = 3 
+a = 3
 b = 2
 # Modulus (Remainder)
 answer = a % b
@@ -129,15 +155,15 @@ Please Excuse My Dear Aunt Sally
 
 * Parenthesis ( )
 * Exponents 2^3^
-* Multiplication * and Division / 
-* Addition + and Subtraction - 
+* Multiplication * and Division /
+* Addition + and Subtraction -
 ****
 
 [WARNING]
 ====
 Divide and Multiply rank equally (and go left to right)
 So, if we have "6 * 3 / 2", we would multiply first and then divide.
-"6 * 3 / 2" is 9
+"6 * 3 / 2" is 9.0
 
 Add and Subtract rank equally (and go left to right)
 So if we have "9 - 6 + 5", we subtract first and then add.
@@ -159,9 +185,9 @@ result = 30 + 6 * 2
 print(result)
 ----
 
-This gives us 42. 
+This gives us 42.
 
-Now there is another way to force Python to do things "out of order" with parenthesis. 
+Now there is another way to force Python to do things "out of order" with parenthesis.
 
 [TIP]
 ====
@@ -193,9 +219,9 @@ math.ceil(4.7)    # returns 5
 math.floor(4.4)    # returns 4
 x = 5
 y = 3
-math.pow(x, y) # the value of x to the power of y - x^y^
+math.pow(x, y) # the value of x to the power of y -> x^y^
 math.pow(8, 2)      # returns 64.0
-math.sqrt(x) # returns the square root of x - 2.2360...
+math.sqrt(x) # returns the square root of x -> 2.2360...
 math.sqrt(64)      # returns 8
 ----
 
@@ -207,12 +233,12 @@ When we ask a 'function' like sqrt to do some work for us, we have to code somet
 
 [source]
 ----
-squareRootTwo = math.sqrt(2.0)
-print(squareRootTwo)
+square_root_two = math.sqrt(2.0)
+print(square_root_two)
 ----
 
-We will get "1.4142135623730951" twice in the output. That number (squareRootTwo) 
-is the square root of 2, and it is 
+We will get "1.4142135623730951" twice in the output. That number (square_root_two)
+is the square root of 2, and it is
 the result of the function and _what the function sqrt "returns"'_.
 
 ====
@@ -237,13 +263,12 @@ then add 36 + 5 = 41.
 
 [source]
 ----
-squareRootTwo = math.pow(2, 0.5)
-print(squareRootTwo)
+square_root_two = math.pow(2, 0.5)
+print(square_root_two)
 ----
 
 And notice, when we raise a number to the _0.5_ power, it's *the same as taking its square root!*.
 And that can be handy sometimes.
 
-You'll learn a lot more about working with numbers in your career as a coder. 
+You'll learn a lot more about working with numbers in your career as a coder.
 This is really just the very basics of the very beginnings.
-

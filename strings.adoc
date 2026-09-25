@@ -99,8 +99,8 @@ This simply means joining strings together using the + operator. We have to turn
 [source]
 ----
 price = 20
-dollarSign = "$"
-priceTag = dollarSign + str(price) # $20
+dollar_sign = "$"
+price_tag = dollar_sign + str(price) # $20
 
 ----
 
@@ -109,10 +109,10 @@ Or perhaps a little more useful example:
 [source]
 ----
 name = "Mikaila"
-hoursWorked = str(12)
+hours_worked = str(12)
 
-workReport = "Today, " + name + " worked a total of " + hoursWorked + " hours."
-print(workReport)
+work_report = "Today, " + name + " worked a total of " + hours_worked + " hours."
+print(work_report)
 ----
 
 The output would be:
@@ -140,24 +140,24 @@ Characters are extracted from a string between "start" and "end", not including 
 
 [source]
 ----
-firstName = "Christopher"
+first_name = "Christopher"
 ----
 
-Now let's use the 3 substring method-functions on firstName and extract and print out "Chris"
+Now let's use the 3 substring method-functions on first_name and extract and print out "Chris"
 
 [source]
 ----
-firstName = "Christopher"
+first_name = "Christopher"
 
-print(firstName[0:5]) # "Chris"
+print(first_name[0:5]) # "Chris"
 ----
 
-We took the `firstName` string and extracted the characters 0 to 4. BUT, let's try to extract the string "stop" from the name.
+We took the `first_name` string and extracted the characters 0 to 4. BUT, let's try to extract the string "stop" from the name.
 
 [source]
 ----
-firstName = "Christopher"
-print(firstName[4:8]) # -> "stop"
+first_name = "Christopher"
+print(first_name[4:8]) # -> "stop"
 ----
 
 Let's try a little harder idea...
@@ -166,9 +166,9 @@ Let's try a little harder idea...
 ====
 [source]
 ----
-firstName = "Christopher"
+first_name = "Christopher"
 ----
-- Your turn to use the string slicing on firstName
+- Your turn to use the string slicing on first_name
 - Extract and print out "STOP" from inside the string above
 - And make it uppercase! ("stop" to "STOP") footnote:[You could google how to do this, try "python string make upper case"]
 ====
@@ -177,8 +177,8 @@ Well?
 
 [source]
 ----
-firstName = "Christopher"
-print(firstName[4:8].upper())
+first_name = "Christopher"
+print(first_name[4:8].upper())
 ----
 
 Want to bet there is also a ".lower()" method-function as well?
@@ -215,7 +215,7 @@ This is a powerful way to handle strings in Python.
 
 === Reverse a String
 
-Now, using the `firstName` variable again, let's reverse the string "STOP" to say "POTS".
+Now, using the `first_name` variable again, let's reverse the string "STOP" to say "POTS".
 
 [TIP]
 ==== 
@@ -234,8 +234,8 @@ Solution
 
 [source]
 ----
-firstName = "Christopher"
-res = firstName[4: 8].upper() # -> "STOP"
+first_name = "Christopher"
+res = first_name[4: 8].upper() # -> "STOP"
 
 rev = res[::-1] # -> POTS
 print(rev) # -> POTS

@@ -13,18 +13,19 @@ This program just prints "Hello, World!". footnote:[And while you might _not yet
 
 Printing goes to "standard output", a place Python uses to communicate with a user (in this case, us, the programmers.)
 
-And if you haven't done it yet, go to https://code.zipcode.rocks/python/ and make a browser bookmark for yourself. Once that's done, you can use that Python REPL footnote:[a REPL is short for "read-evaluate-print loop", a special kind of computer program that lets you run code of a given language.] as a place where you can type in the code from this book and run it to see what each code snippet does. 
-We run `python3` in this book. 
-Don't use python version 2. `python3` is what the pros use.
+And if you haven't done it yet, go to https://code.zipcode.rocks/python/ and make a browser bookmark for yourself. Once that's done, you can use that Python REPL footnote:[a REPL is short for "read-evaluate-print loop", a special kind of computer program that lets you run code of a given language.] as a place where you can type in the code from this book and run it to see what each code snippet does.
+We run `python3` (and let's get specific, v2 of this book relies on *at least* python 3.14 in this book.)
+Don't use python version 2.
+`python3` is what the pros use.
 
 We will use `print` to do a lot in the coming pages.
 
-Here's your second Python program: 
+Here's your second Python program:
 
 [source]
 ----
-milesPerHour = 55.0
-print("Car's Speed: ", milesPerHour)
+miles_per_hour = 55.0
+print("Car's Speed: ", miles_per_hour)
 ----
 
 If you typed into your REPL and clicked the "Run" button, you should have seen this as your output:
@@ -41,7 +42,7 @@ Cool, huh? The ability to communicate with you is one of Python's most fundament
 
 While you're not thinking about the long term, or about large Python programs, there is a powerful thing in Python that helps with tracking comments and notes about the code.
 
-In your program, you can write stuff that Python will ignore, it's just there for you (or readers of your code). 
+In your program, you can write stuff that Python will ignore, it's just there for you (or readers of your code).
 We use a 'hash character' to start a comment, and the comment goes to the end of the line.
 Python will ignore anything on a line after a hash character. "#"
 
@@ -57,25 +58,25 @@ Often, you'll see something like this in this book.
 
 [source]
 ----
-flourAmount = 3.5;
+flour_amount = 3.5;
 
-print(flourAmount); # -> 3.5
+print(flour_amount); # -> 3.5
 ----
 
 That comment at the end of the print line is showing what you can expect to see in the output. Here it would be "3.5" printed by itself. Try it in your bookmarked Repl.
 
-We can also add useful stuff to the .log call. 
+We can also add useful stuff to the .log call.
 
 [source]
 ----
-flourAmount = 3.5;
+flour_amount = 3.5;
 
-print("We need", flourAmount, "cups of flour."); # -> We need 3.5 cups of flour.
+print("We need", flour_amount, "cups of flour."); # -> We need 3.5 cups of flour.
 ----
 
 See how Python types it all out as a useful phrase? That proves to be very handy in a million-plus (or more) cases.
 
-Comments can be used to explain tricky bits of code, or describe what you should see in output. Comments are your friend. 
+Comments can be used to explain tricky bits of code, or describe what you should see in output. Comments are your friend.
 
 == Statements and Expressions
 
@@ -91,14 +92,14 @@ An *expression* is something that needs to be computed to find out the answer. H
 
 speed > 55.0
 
-regularPrice * (1.0 - salePercentOff)
+regular_price * (1.0 - sale_percent_off)
 ----
 
 Each of these lines is something we'd like Python to *compute* for us. That computation is often referred to as "evaluation" or "evaluate the expression" to get to the answer. There are two kinds of expressions in Python, _arithmetic expressions_ and _boolean expressions_.
 
 *Arithmetic expressions* are, as their name implies, something that require arithmetic to get the answer. An expression like "5 + 8 - 3" gets _evaluated_ to 10.
 
-*Boolean expressions* result in either a True or a False value. Example: "maxSpeed > 500.0" - this is either true or false depending on the value of maxSpeed.
+*Boolean expressions* result in either a True or a False value. Example: "max_speed > 500.0" - this is either true or false depending on the value of max_speed.
 
 === Statements
 
@@ -108,17 +109,17 @@ A *statement* is just a line of Python.
 ----
 # at the Grocery
 
-salesTaxRate = 0.06
+sales_tax_rate = 0.06
 
-totalGroceries = 38.99
-salesTax = totalGroceries * salesTaxRate
+total_groceries = 38.99
+sales_tax = total_groceries * sales_tax_rate
 
-chargeToCard = totalGroceries + salesTax
+charge_to_card = total_groceries + sales_tax
 ----
 And this is what a Python program looks like. It's just a list of statements, one after the other, that get computed from the top down.
 
-Some of the statements have expressions in them (like totalGroceries * salesTaxRate), while some are just simple *assignment* statements (like totalGroceries = 38.99, where we assign the variable 'totalGroceries' the value 38.99). 
-Don't panic. These are just some simple examples of Python to give you a feel for it. 
+Some of the statements have expressions in them (like total_groceries * sales_tax_rate), while some are just simple *assignment* statements (like total_groceries = 38.99, where we assign the variable 'total_groceries' the value 38.99).
+Don't panic. These are just some simple examples of Python to give you a feel for it.
 We'll go thru each of these kinds of things slowly in sections ahead.
 
 === Multi-line Statements
@@ -129,9 +130,9 @@ In this book, you may see that the code used in examples is longer than can fit 
 ----
 k = h * kph - (rest / 60)
 
-kilometersCycled = numberOfHoursPedalled \
-    * kilometersPerHour \
-    - (totalMinutesOfRest / 60)
+kilometers_cycled = number_of_hours_pedalled \
+    * kilometers_per_hour \
+    - (total_minutes_of_rest / 60)
 ----
 
 When you come across code that goes onto multiple lines, do like Python does, look for the backslash, when you find it, think of the line being spread out.
@@ -147,22 +148,22 @@ Not Python, that's why is _SO_ very important to get it right.
 
 [source]
 ----
-if (magePower > 120.0):
-    maxMagic = 500.0
-    lifeSpan = 800.0
-    maxWeapons = magePower / maxPowerPerWeapon
-    if (maxWeapons < 150):
+if (mage_power > 120.0):
+    max_magic = 500.0
+    life_span = 800.0
+    max_weapons = mage_power / max_power_per_weapon
+    if (max_weapons < 150):
         print('You have too many weapons!')
     else:
         backpack.load()
 
 # some more code
-print(magePower, "is your Mage's Power rating.")
+print(mage_power, "is your Mage's Power rating.")
 ----
 
-See those SPACES (and confusingly, they might be TABs but you cannot tell that by looking at the line). 
+See those SPACES (and confusingly, they might be TABs but you cannot tell that by looking at the line).
 All the indented lines below the IF statement are part of what gets run when the IF is True.
-Then you also see a nested IF below that, one that has an _else_ statement. 
+Then you also see a nested IF below that, one that has an _else_ statement.
 But the key thing is to look at the lines of code and notice how they are _indented_, because that tells what you
 need to know about how the program works, and what gets done depending on the states of the variables.
 (Don't worry, we will be going into all this a lot more carefully later.)
@@ -175,4 +176,3 @@ So, the wise Python beginner spends a fair amount of time making sure the detail
 Making sure code is indented correctly is part of being a Pythonista.
 
 Indentation is rejected as inconsistent if the code mixes tabs and spaces it gets flagged as an error in the code; a TabError is raised in that case.
-
