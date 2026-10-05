@@ -1,0 +1,59 @@
+
+== Mixins
+
+Sometimes several classes need the same small piece of behavior. You could copy the same methods into each class, but then a change to that behavior means editing every copy. A *mixin* lets you write that behavior once and add it to classes through inheritance.
+
+A mixin is usually a small class that provides a focused capability. It is not generally meant to represent a complete thing on its own. For example, a mixin can give different kinds of objects the ability to take damage:
+
+[source]
+----
+class DamageMixin:
+    def take_damage(self, amount):
+        self.health = max(0, self.health - amount)
+
+class Spacecraft:
+    def __init__(self, name, health):
+        self.name = name
+        self.health = health
+----
+
+`DamageMixin` defines a method that uses `self.health`. It does not create or set up that attribute; the class using the mixin is responsible for providing it.
+
+=== Combining Behaviors
+
+To add the mixin's behavior to `Spacecraft`, list it as a parent class:
+
+[source]
+----
+class DamageMixin:
+    def take_damage(self, amount):
+        self.health = max(0, self.health - amount)
+
+class RepairMixin:
+    def repair(self, amount):
+        self.health = min(self.max_health, self.health + amount)
+
+class Spacecraft(DamageMixin, RepairMixin):
+    def __init__(self, name, health):
+        self.name = name
+        self.health = health
+        self.max_health = health
+
+enterprise = Spacecraft("Enterprise", 100)
+enterprise.take_damage(30)
+print(enterprise.health)  # -> 70
+
+enterprise.repair(10)
+print(enterprise.health)  # -> 80
+----
+
+`Spacecraft` gets both `take_damage()` and `repair()` without defining either method itself. `DamageMixin` and `RepairMixin` each contribute a separate behavior, while `Spacecraft` supplies the data those behaviors need.
+
+Mixins work best when they stay focused and have clear expectations about what the class using them provides. If multiple parent classes define methods with the same name, Python's method resolution order determines which one is used. For now, give each mixin its own methods and avoid name clashes.
+
+[TIP]
+====
+* Create an `InventoryMixin` with an `add_item(item)` method
+* Add it to a `Player` class that initializes an empty `inventory` list
+* Create a player, add two items, and print the inventory
+====

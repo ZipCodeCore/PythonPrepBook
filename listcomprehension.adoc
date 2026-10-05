@@ -1,0 +1,111 @@
+
+
+== List Comprehensions
+
+Remember `map()` and `filter()` from the last chapter? They're powerful, but let's be honest - wrapping everything in `list(map(...))` and `list(filter(...))` gets a little wordy. Python has a shorter, more popular way to do the exact same jobs, called a *list comprehension*.
+
+=== Building a List the Old Way
+
+Let's go back to our dungeon game. We want to double every player's health score, the same problem we solved with `map()` last chapter.
+
+[source]
+----
+player_health_scores = [100, 87, 42]
+
+boosted_scores = []
+for score in player_health_scores:
+    boosted_scores.append(score + 10)
+
+print(boosted_scores)  # -> [110, 97, 52]
+----
+
+Four lines just to build a new list. Nothing wrong with it, but Python programmers found themselves typing this same shape - "make an empty list, loop over something, append a transformed value" - so often that they built a shortcut right into the language.
+
+=== The List Comprehension Way
+
+Here's the exact same result, in one line:
+
+[source]
+----
+player_health_scores = [100, 87, 42]
+
+boosted_scores = [score + 10 for score in player_health_scores]
+
+print(boosted_scores)  # -> [110, 97, 52]
+----
+
+That's a *list comprehension*. It follows this pattern:
+
+[source]
+----
+[expression for item in iterable]
+----
+
+* `expression` - what you want to happen to each item, before it lands in the new list
+* `item` - the name you're giving each thing as you pull it out, one at a time
+* `iterable` - the list (or string, or range, or anything else you can loop over) you're pulling items from
+
+Read it out loud almost like English: "give me `score + 10`, *for* each `score` *in* `player_health_scores`." That's really all a list comprehension is - a `for` loop and an `append()`, squeezed into a single line, wrapped in square brackets.
+
+=== Filtering, Too
+
+Comprehensions can also do what `filter()` does - keep only the items that pass a test - by tacking an `if` onto the end.
+
+[source]
+----
+player_health_scores = [100, 87, 0, 42, 0]
+
+survivors = [score for score in player_health_scores if score > 0]
+
+print(survivors)  # -> [100, 87, 42]
+----
+
+The pattern grows just slightly:
+
+[source]
+----
+[expression for item in iterable if condition]
+----
+
+Only items where `condition` comes out `True` get run through `expression` and added to the new list. Everything else gets skipped entirely.
+
+Here's one more, using our donut flavors:
+
+[source]
+----
+donut_flavors = ["chocolate", "glazed", "jelly", "chocolate glaze"]
+
+chocolatey_ones = [flavor for flavor in donut_flavors if "chocolate" in flavor]
+
+print(chocolatey_ones)  # -> ['chocolate', 'chocolate glaze']
+----
+
+Compare that to the `filter()` version from the last chapter - same result, but no `lambda`, no `list()` wrapper needed.
+
+=== Combining Transform and Filter
+
+You can do both at once - transform *and* filter - in the very same comprehension.
+
+[source]
+----
+player_health_scores = [100, 87, 0, 42, 0]
+
+boosted_survivors = [score + 5 for score in player_health_scores if score > 0]
+
+print(boosted_survivors)  # -> [105, 92, 47]
+----
+
+Notice the order: the `if` at the end decides *who gets in*, and the expression at the front decides *what happens to them* once they're in. Zeros never even make it to the `+ 5` part.
+
+[TIP]
+====
+* Start with a list of five donut prices
+* Build a new list, using a comprehension, that adds 6% sales tax to each price
+* Now build a second comprehension that only keeps the donuts priced under $2.00 (before tax)
+====
+
+=== map()/filter() or a Comprehension?
+
+Both do the same job. Most Python programmers reach for a list comprehension first, since it tends to read more clearly, especially once you're used to the pattern. `map()` and `filter()` aren't wrong, and you'll still see them out in the wild - now you'll recognize both styles when you run into them.
+
+Lists aren't the only thing you can build this way. Next up, we'll use this exact same idea to build dictionaries.

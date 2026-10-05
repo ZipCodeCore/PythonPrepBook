@@ -1,0 +1,203 @@
+
+
+== Built-in Functions
+
+You've already met a few of Python's *built-in functions* without me making a big deal about it. `print()`, `len()`, `type()`, `range()` - these have been showing up in almost every chapter so far. That's because Python ships with a whole toolbox of these ready-made functions, sitting there waiting for you to use them, no importing required.
+
+Think of built-in functions as the tools that came in the toolbox when you bought it, versus tools you'd have to go buy separately (that's what _modules_ are for, which we'll get to). You don't have to build a hammer before you can hammer a nail. Python already handed you the hammer.
+
+We're not going to cover *all* of them - there are over 70 in Python - but let's round up the ones you'll reach for every single day.
+
+=== The Everyday Ones
+
+These are the built-ins you'll type without even thinking about it, mostly for looking at what's going on inside your program.
+
+[cols=",",options="header",]
+|===
+|Function |What it does
+|`print()` |Sends text or a value out to the screen
+|`len()` |Tells you how many items are in a string, list, tuple, dictionary, or set
+|`type()` |Tells you what kind of thing a variable actually is
+|`input()` |Pauses your program and waits for the human to type something
+|===
+
+You already know `print()` and `len()` well. `type()` showed up back when we talked about data types - it's your go-to when you're not sure what you're holding.
+
+[source]
+----
+donut_count = 12
+print(type(donut_count))  # -> <class 'int'>
+----
+
+`input()` is new, and it's a fun one, because it's the first time your program actually *listens* to a human being instead of just talking at them.
+
+[source]
+----
+player_name = input("What's your character's name? ")
+print("Welcome to the dungeon, " + player_name + "!")
+----
+
+Whatever the person types gets handed back to you *as a string*, every single time - even if they type a number.
+
+[source]
+----
+age = input("How old is your character? ")
+print(type(age))  # -> <class 'str'>, even though they typed "25"
+----
+
+NOTE: If you need that input as an actual number, you have to convert it yourself, which brings us to our next set of tools.
+
+=== Converting Between Types
+
+`str()`, `int()`, `float()`, and `bool()` let you convert a value from one data type into another. You've actually already seen `str()` back when we talked about joining a number onto a string.
+
+[source]
+----
+hours_worked = 12
+report = "Hours worked: " + str(hours_worked)
+----
+
+The reverse trick works too. Remember how `input()` always hands you back a string? Here's how you turn that string into a real number you can do math with.
+
+[source]
+----
+age_text = input("How old is your character? ")
+age = int(age_text)
+
+print(age + 1)  # works! age is now a real number.
+----
+
+[source]
+----
+print(int("42"))      # -> 42
+print(float("3.14"))  # -> 3.14
+print(bool(0))         # -> False
+print(bool(1))         # -> True
+print(bool(""))        # -> False, an empty string is "falsy"
+print(bool("hello"))   # -> True, almost anything else is "truthy"
+----
+
+There are four more constructors just like these, except they build *data structures* instead of simple values: `list()`, `dict()`, `set()`, and `tuple()`. We met `set()` this way back in the Sets chapter, turning a list with duplicates into a set with none.
+
+[source]
+----
+weapons_picked = ["sword", "bow", "sword", "axe", "bow"]
+
+unique_weapons = set(weapons_picked)
+print(unique_weapons)  # -> {'sword', 'bow', 'axe'}
+
+back_to_a_list = list(unique_weapons)
+print(back_to_a_list)  # -> ['sword', 'bow', 'axe']
+----
+
+Each of these constructors is handy any time you need an empty starting point, too - `[]` and `list()` do the same job, but sometimes writing `list()` makes your intention clearer to someone reading your code.
+
+=== Looping Like a Pro
+
+We introduced `range()` back in the For Loop chapter, so you already know it generates a sequence of numbers to loop over. Now let's meet a couple of its cousins that make loops even more powerful.
+
+`enumerate()` solves a really common headache: needing *both* an item from a list *and* its index, at the same time, without writing your own counter variable.
+
+[source]
+----
+donut_flavors = ["chocolate", "glazed", "jelly"]
+
+for index, flavor in enumerate(donut_flavors):
+    print(index, "-", flavor)
+
+# output is
+# 0 - chocolate
+# 1 - glazed
+# 2 - jelly
+----
+
+Before `enumerate()`, you'd have had to do something clunkier, like looping over `range(len(donut_flavors))` and indexing in yourself. `enumerate()` just hands you both pieces, gift-wrapped, every time through the loop.
+
+`zip()` is for when you've got two (or more) lists that go together, item by item, and you want to walk through them side by side.
+
+[source]
+----
+player_names = ["Sam", "Jade", "Sadie"]
+player_health_scores = [100, 87, 42]
+player_data = zip(player_names, player_health_scores)
+print(type(player_data)) # -> <class 'zip'>
+
+for name, health in player_data:
+    print(name, "has", health, "health points.")
+
+# output is
+# Sam has 100 health points.
+# Jade has 87 health points.
+# Sadie has 42 health points.
+----
+
+`zip()` pairs up the first item of each list, then the second item of each, and so on - like a zipper on a jacket, pulling two rows of teeth (data) together one pair at a time. That's actually where it gets its name.
+
+Finally, `sorted()` hands you back a *brand new* sorted list, and - importantly - it leaves your original list completely untouched.
+
+[source]
+----
+player_health_scores = [100, 87, 42, 100, 65]
+
+ranked = sorted(player_health_scores)
+print(ranked)                 # -> [42, 65, 87, 100, 100]
+print(player_health_scores)   # -> [100, 87, 42, 100, 65], unchanged!
+----
+
+Want it the other way around, highest to lowest? Just add `reverse=True`.
+
+[source]
+----
+ranked = sorted(player_health_scores, reverse=True)
+print(ranked)  # -> [100, 100, 87, 65, 42]
+----
+
+=== Doing Math Without the `math` Module
+
+A handful of built-ins handle simple math jobs so commonly needed that Python doesn't even make you `import` anything for them.
+
+[source]
+----
+weekday_scores = [88, 92, 79, 95, 100]
+
+print(sum(weekday_scores))   # -> 454
+print(max(weekday_scores))   # -> 100
+print(min(weekday_scores))   # -> 79
+----
+
+`sum()`, `max()`, and `min()` all work on any list (or tuple, or set) full of numbers. `max()` and `min()` also work if you just hand them a plain old comma-separated list of values, no brackets needed.
+
+[source]
+----
+print(max(4, 19, 7))  # -> 19
+print(min(4, 19, 7))  # -> 4
+----
+
+`abs()` gives you the *absolute value* of a number - meaning, it strips away any negative sign and hands you back the positive version.
+
+[source]
+----
+altitude_change = -350
+
+print(abs(altitude_change))  # -> 350
+----
+
+Why would you want that? Imagine our Mars Lander from the Appendix, tracking how far off course it drifted. Sometimes it drifts left (negative), sometimes right (positive), but for a warning light, you often just care *how much* it drifted, not which direction.
+
+[source]
+----
+drift = -12.5
+
+if abs(drift) > 10:
+    print("Warning: lander has drifted too far off course!")
+----
+
+[TIP]
+====
+* Make a list of five numbers, some positive and some negative
+* Use `sum()` to add them all up
+* Use `max()` and `min()` to find the highest and lowest
+* Use `abs()` on the lowest one to see how "big" it really is, ignoring its sign
+====
+
+We've covered the built-ins you'll reach for constantly, in almost every program you write. Once these feel comfortable in your hands, head on to the next chapter, where we'll take a closer look at lambdas - small, throwaway functions that pair up with a few more built-in functions you're about to meet.

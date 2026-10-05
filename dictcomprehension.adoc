@@ -1,0 +1,109 @@
+
+
+== Dictionary Comprehensions
+
+Now that list comprehensions feel familiar, let's reuse that exact same idea to build a *dictionary* instead of a list. Not surprisingly, this is called a *dictionary comprehension*.
+
+=== Building a Dictionary the Old Way
+
+Remember `zip()`, from the Built-in Functions chapter? We used it to pair up player names with their health scores and loop over both together.
+
+[source]
+----
+player_names = ["Sam", "Jade", "Sadie"]
+player_health_scores = [100, 87, 42]
+
+health_lookup = {}
+for name, health in zip(player_names, player_health_scores):
+    health_lookup[name] = health
+
+print(health_lookup)
+# output is
+# {'Sam': 100, 'Jade': 87, 'Sadie': 42}
+----
+
+We're building an empty dictionary, then looping and adding one key:value pair at a time. It works, but just like with lists, there's a shortcut.
+
+=== The Dictionary Comprehension Way
+
+[source]
+----
+player_names = ["Sam", "Jade", "Sadie"]
+player_health_scores = [100, 87, 42]
+
+health_lookup = {name: health for name, health in zip(player_names, player_health_scores)}
+
+print(health_lookup)
+# output is
+# {'Sam': 100, 'Jade': 87, 'Sadie': 42}
+----
+
+Same result, one line. The pattern looks almost exactly like a list comprehension, except it's wrapped in curly braces `{}` (just like a dictionary itself), and instead of one expression, you provide *two*, separated by a colon - a key and a value.
+
+[source]
+----
+{key_expression: value_expression for item in iterable}
+----
+
+* `key_expression` - what becomes the key for this pair
+* `value_expression` - what becomes the value for this pair
+* `item` - the name for whatever you're pulling out of `iterable`, one at a time
+
+=== A Simpler Example
+
+Let's build a dictionary that maps each donut flavor to the length of its name - no `zip()` required this time, just one list.
+
+[source]
+----
+donut_flavors = ["chocolate", "glazed", "jelly"]
+
+flavor_lengths = {flavor: len(flavor) for flavor in donut_flavors}
+
+print(flavor_lengths)
+# output is
+# {'chocolate': 9, 'glazed': 6, 'jelly': 5}
+----
+
+Here, `flavor` is both the key *and* used to compute the value (`len(flavor)`). The key and the value don't have to come from different places - they can both be built from the very same item.
+
+=== Filtering, Same as Before
+
+Just like list comprehensions, you can tack an `if` onto the end to only include certain pairs.
+
+[source]
+----
+player_health_scores = {"Sam": 100, "Jade": 87, "Sadie": 0}
+
+survivors_only = {name: health for name, health in player_health_scores.items() if health > 0}
+
+print(survivors_only)
+# output is
+# {'Sam': 100, 'Jade': 87}
+----
+
+NOTE: To loop over an *existing* dictionary's key:value pairs, you call `.items()` on it, which is what hands you both `name` and `health` together, one pair at a time.
+
+=== Transforming an Existing Dictionary
+
+Dictionary comprehensions are also great for building a *new, changed* version of a dictionary you already have, without touching the original.
+
+[source]
+----
+player_health_scores = {"Sam": 100, "Jade": 87, "Sadie": 42}
+
+boosted = {name: health + 10 for name, health in player_health_scores.items()}
+
+print(boosted)                # -> {'Sam': 110, 'Jade': 97, 'Sadie': 52}
+print(player_health_scores)   # -> {'Sam': 100, 'Jade': 87, 'Sadie': 42}, unchanged!
+----
+
+[TIP]
+====
+* Start with a dictionary mapping three donut flavors to their prices
+* Build a new dictionary, using a comprehension, with 6% sales tax added to every price
+* Now build a second comprehension that only keeps the flavors priced under $2.00
+====
+
+Dictionary comprehensions come in handy any time you're building a lookup table from some other collection of data - which, now that you're thinking in Python, turns out to be *very* often.
+
+There's one more comprehension left to meet. Let's finish this trio by building a set.

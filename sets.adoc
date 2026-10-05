@@ -1,0 +1,124 @@
+
+
+== Sets
+
+We just talked about dictionaries and their key:value pairs. Now let's talk about their cousin, the *set*.
+
+A set is a collection, like a list, but with one big difference: *a set will not allow duplicates.* Every item in a set is unique. Think of a set as a bag of marbles where, no matter how many times you try to drop in a second red marble, the bag just quietly refuses to hold two. There's only ever one red marble in there.
+
+Sets also don't care about order. If a list is like the post office boxes we talked about earlier - numbered and in a row - a set is more like a junk drawer. Everything's in there, but nobody's keeping track of what's "first."
+
+=== Creating a Set
+
+You make a set with curly braces, much like a dictionary, but without the `key:value` pairs - just values.
+
+[source]
+----
+donut_flavors = {"chocolate", "glazed", "jelly"}
+----
+
+Here's the fun part. What happens if we try to sneak in a duplicate?
+
+[source]
+----
+donut_flavors = {"chocolate", "glazed", "jelly", "chocolate"}
+
+print(donut_flavors)
+# output is
+# {'chocolate', 'glazed', 'jelly'}
+----
+
+See that? We tried to add "chocolate" twice, and the set just kept the one copy. That's the whole point of a set: it *guarantees uniqueness* for you, automatically, without you having to write any code to check for it yourself.
+
+NOTE: An empty pair of curly braces, `{}`, actually creates an empty *dictionary*, not an empty set. To make an empty set, you have to use `set()`.
+
+[source]
+----
+empty_set = set()
+----
+
+=== Adding and Removing Items
+
+You add items to a set with `.add()`, and remove them with `.remove()`.
+
+[source]
+----
+donut_flavors = {"chocolate", "glazed", "jelly"}
+
+donut_flavors.add("sprinkled")
+print(donut_flavors)
+# output is
+# {'chocolate', 'glazed', 'jelly', 'sprinkled'}
+
+donut_flavors.remove("jelly")
+print(donut_flavors)
+# output is
+# {'chocolate', 'glazed', 'sprinkled'}
+----
+
+If you try to add something that's already there, nothing bad happens - Python just shrugs and leaves the set exactly as it was.
+
+[source]
+----
+donut_flavors.add("chocolate")  # already there, no change
+----
+
+=== Testing Membership
+
+Just like with dictionaries, we can use `in` and `not in` to ask a set whether it holds something.
+
+[source]
+----
+donut_flavors = {"chocolate", "glazed", "jelly"}
+
+if "jelly" in donut_flavors:
+    print("Good, we have jelly donuts!")
+
+if "cronut" not in donut_flavors:
+    print("No cronuts here, sadly.")
+----
+
+This is actually one of the best reasons to use a set. Checking "is this thing in here?" on a big set is very fast, much faster than checking a big list one item at a time.
+
+=== Where Sets Really Shine: Removing Duplicates
+
+Let's say five friends are playing our dungeon game, and each one picked a favorite weapon. We want to know how *many different* weapons were picked, not how many friends picked each one.
+
+[source]
+----
+weapons_picked = ["sword", "bow", "sword", "axe", "bow"]
+
+unique_weapons = set(weapons_picked)
+
+print(unique_weapons)
+# output is
+# {'sword', 'bow', 'axe'}
+
+print(len(unique_weapons))  # -> 3
+----
+
+We took a list, which allowed duplicates, and turned it into a set with one line of code. Just like that, the duplicates vanished, and we're left with only the unique weapons.
+
+=== Combining Sets
+
+Sets have a few operators borrowed straight from math class, back when you drew those overlapping circles (Venn diagrams, if you remember the name). The two you'll use most are *union* (everything from both sets, combined) and *intersection* (only what's in both sets).
+
+[source]
+----
+players_with_sword = {"Sam", "Jade", "Sadie"}
+players_with_shield = {"Jade", "Sadie", "Marcus"}
+
+# union: everyone who has a sword OR a shield (or both)
+print(players_with_sword | players_with_shield)
+# output is
+# {'Sam', 'Jade', 'Sadie', 'Marcus'}
+
+# intersection: only the players who have BOTH
+print(players_with_sword & players_with_shield)
+# output is
+# {'Jade', 'Sadie'}
+----
+
+You don't need to memorize every set operation Python offers. Just remember that `|` glues two sets together (removing duplicates along the way, of course), and `&` finds what they have in common.
+
+Sets are a handy tool to keep in your back pocket. Whenever you find yourself needing to guarantee "no duplicates allowed" or asking "is this thing in that collection?" over and over, a set is very likely the right data structure for the job.

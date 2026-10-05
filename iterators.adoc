@@ -1,0 +1,105 @@
+
+
+== Iterators
+
+Back in the Loops chapter, we introduced the word *iterable* - anything a `for` loop knows how to walk through, one item at a time. We've used plenty of iterables since then: lists, strings, ranges, dictionaries, sets, tuples. Now that you know classes and dunder methods, we can finally open the hood and see exactly what makes something iterable in the first place.
+
+=== Iterable vs. Iterator
+
+These two words look almost identical, and that trips people up, so let's be precise:
+
+* An *iterable* is anything you *can* loop over - a list, a string, a range.
+* An *iterator* is the actual object doing the walking - it remembers exactly where it currently is, and knows how to fetch the *next* item.
+
+Here's the relationship: an iterable doesn't walk itself. When a `for` loop wants to walk through one, it first asks the iterable for an iterator, and *that* iterator is what actually keeps track of position and hands back values, one at a time.
+
+=== Getting an Iterator by Hand
+
+You can do this yourself, without a `for` loop at all, using two built-in functions: `iter()` and `next()`.
+
+[source]
+----
+donut_flavors = ["chocolate", "glazed", "jelly"]
+
+flavor_iterator = iter(donut_flavors)
+
+print(next(flavor_iterator))  # -> chocolate
+print(next(flavor_iterator))  # -> glazed
+print(next(flavor_iterator))  # -> jelly
+----
+
+`iter()` takes an iterable and hands you back its iterator. Each call to `next()` moves that iterator forward by one and gives you the next value. What happens if you call `next()` one time too many, once there's nothing left?
+
+[source]
+----
+print(next(flavor_iterator))
+# StopIteration
+----
+
+Python raises a `StopIteration` error. That's not really a "problem" - it's the iterator's official way of saying "I'm out of items, we're done here."
+
+=== What a `for` Loop Is Really Doing
+
+Here's the secret: a `for` loop is just doing exactly what we did above, automatically, and quietly catching `StopIteration` for you so your program doesn't crash.
+
+[source]
+----
+donut_flavors = ["chocolate", "glazed", "jelly"]
+
+flavor_iterator = iter(donut_flavors)
+
+while True:
+    try:
+        flavor = next(flavor_iterator)
+    except:
+        break
+    print(flavor)
+----
+
+That clunky `while True` / `try` / `except` mess is precisely what `for donut in donut_flavors:` is doing behind the scenes, every single time you write it. This is why `for` works identically on a list, a string, a dictionary, or anything else iterable - they all agree to answer `iter()` and `next()` the same way, so `for` never needs to know or care what kind of thing it's actually looping over.
+
+=== Making Your Own Class Iterable
+
+Since `+++__iter__+++` and `+++__next__+++` are just two more dunder methods, you can add them to any class you write, and suddenly a `for` loop will work on your own objects too.
+
+[source]
+----
+class Countdown:
+    def __init__(self, start):
+        self.current = start
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.current < 0:
+            raise StopIteration
+        value = self.current
+        self.current -= 1
+        return value
+
+for count in Countdown(3):
+    print(count)
+
+# output is
+# 3
+# 2
+# 1
+# 0
+----
+
+Let's break down the two dunders doing the work here:
+
+* `+++__iter__+++` needs to return *an iterator* - here, we just return `self`, since our `Countdown` object is perfectly capable of tracking its own position and handing back its own next value.
+* `+++__next__+++` does the real work: it computes the next value, and once there's nothing left to give, it raises `StopIteration` itself, exactly like the built-in iterators did.
+
+Because `Countdown` defines both, Python's `for` loop is happy to walk right through it, exactly like it would a list or a range.
+
+[TIP]
+====
+* Write a class `HealthDrain` that starts a player at some health value and counts *down by 5* each time, stopping once health reaches 0
+* Give it `+++__init__+++`, `+++__iter__+++`, and `+++__next__+++`
+* Use it in a `for` loop and print each health value along the way
+====
+
+All of this - `iter()`, `next()`, `StopIteration`, `+++__iter__+++`, `+++__next__+++` - is the real machinery under every `for` loop you've ever written. It's a little bit of ceremony to write by hand, though. In the next chapter, we'll meet *generators* - Python's much shorter way to build your own iterator, without writing a whole class at all.

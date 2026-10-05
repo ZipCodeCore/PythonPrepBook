@@ -26,39 +26,39 @@ You end up with a function named 'add' that takes two parameters and adds them, 
 
 [source]
 ----
-def greetUser(username):
+def greet_user(username):
     print( "Hello " + username)
     return
 
 # calling/Invoking the function
-greetUser("Mike Jones"); # "Hello Mike Jones"
+greet_user("Mike Jones"); # "Hello Mike Jones"
 ----
 
 === Invoking Functions
 
 Functions are meant to be _invoked_. So you can have one function call another function which calls a third function and so on; it's very common.
 
-Imagine we have a program that gets an airplane ready for flight. We can imagine a whole series of functions we'd have to write. Things like 'loadPassengers', 'loadBaggage', 'loadFuel', 'checkTirePressures', and so on. Then we might have a 'higher level' functions which brings all these pieces together:
+Imagine we have a program that gets an airplane ready for flight. We can imagine a whole series of functions we'd have to write. Things like 'load_passengers', 'load_baggage', 'load_fuel', 'check_tire_pressures', and so on. Then we might have a 'higher level' functions which brings all these pieces together:
 
 [source]
 ----
-def prepFlight(airplane):
-    loadBaggage(airplane)
-    loadPassengers(airplane)
+def prep_flight(airplane):
+    load_baggage(airplane)
+    load_passengers(airplane)
 
-    loadFuel(airplane)
-    performPreflightChecklist(airplane[copilot])
-    askTowerToDepart(airplane[pilot])
-    departGate(airplane)
+    load_fuel(airplane)
+    perform_preflight_checklist(airplane[copilot])
+    ask_tower_to_depart(airplane[pilot])
+    depart_gate(airplane)
 
-    taxiToRunway(airplane, mainRunway90)
+    taxi_to_runway(airplane, main_runway_90)
     takeoff(airplane[pilot], airplane)
 
     return
 
 ----
 
-You can see how functions you perform different things in a particular order, and while you might have no idea _how_ 'loadBaggage' does what it does, you can see how the program preps the airplane object for flight and makes sure everything important is done. Each of the functions from 'loadBaggage' to 'takeoff' is invoked and returns so the next one can be invoked. This is the power of functions - the ability to take some code and put it a function so that it much easier to understand.
+You can see how functions you perform different things in a particular order, and while you might have no idea _how_ 'load_baggage' does what it does, you can see how the program preps the airplane object for flight and makes sure everything important is done. Each of the functions from 'load_baggage' to 'takeoff' is invoked and returns so the next one can be invoked. This is the power of functions - the ability to take some code and put it a function so that it much easier to understand.
 
 === Lambda Functions
 
@@ -86,10 +86,10 @@ Once Python reaches a return statement, the function will stop executing. Functi
 
 [source]
 ----
-def greetUser(username):
+def greet_user(username):
     return "Hello " + username
 
-result = greetUser("Welcome back, Mike Jones")
+result = greet_user("Welcome back, Mike Jones")
 print(result); # will print "Hello Welcome back, Mike Jones" 
 ----
 
@@ -97,7 +97,7 @@ Or like this:
 
 [source]
 ----
-def determineWinner(home, visitor):
+def determine_winner(home, visitor):
     if (home[score] > visitor[score]):
         return "Home Team Wins! Let's have a Parade!"
     elif (home[score] < visitor[score]):
@@ -121,10 +121,10 @@ visitor = {
     'score': 0
 }
 
-playGame(home, visitor) # a lot of work done in this function(!)
+play_game(home, visitor) # a lot of work done in this function(!)
 
 # game is done
-result = determineWinner(home, visitor)
+result = determine_winner(home, visitor)
 
 # and then print the result..
 print(result)
@@ -136,10 +136,10 @@ As you just saw, functions can also take parameters to be used within a function
 
 [source]
 ----
-def addThreeNumbers(a, b, c):
+def add_three_numbers(a, b, c):
     return (a + b + c)
 
-def determineWinner(home, visitor):
+def determine_winner(home, visitor):
     if (home['score'] > visitor['score']):
         return "Home Team Wins! Let's have a Parade!";
     elif (home['score'] < visitor['score']):
@@ -147,7 +147,7 @@ def determineWinner(home, visitor):
 
     return "It's a Tie!"
 
-def makeNegative(number):
+def make_negative(number):
     if (number > 0):
         return -(number)
     # already negative, it's less than 0
@@ -177,7 +177,7 @@ Try to write a function that will perform the following requirements:
 
 [TIP]
 ====
-* Create a function called zipCoder
+* Create a function called zip_coder
 * Your function takes one parameter of type number
 * Your function checks and does the following
 * If parameter is divisible by 3 and 5 (15). Print ZipCoder
@@ -207,15 +207,15 @@ Well, here's one solution:
 ----
 # Function ZipCoder
 
-def zipCoder(aNumber):
-    if (aNumber % 15 == 0):
+def zip_coder(a_number):
+    if (a_number % 15 == 0):
         print("ZipCoder")
-    elif (aNumber % 3 == 0):
+    elif (a_number % 3 == 0):
         print("Zip")
-    elif (aNumber % 5 == 0):
+    elif (a_number % 5 == 0):
         print("Coder")
 
 
-zipCoder(45) # -> ZipCoder
+zip_coder(45) # -> ZipCoder
 ----
 

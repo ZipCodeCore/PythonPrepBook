@@ -23,7 +23,7 @@ Another place pass can be used is as a place-holder for a function or conditiona
 
 [source]
 ----
-def isPlayerAlive(*args):
+def is_player_alive(*args):
     pass   # you'll program this later
 ----
 

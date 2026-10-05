@@ -18,13 +18,13 @@ How long will it take us to drive all those miles?
 ****
 
 What do we need figure out? We need a variable for our
-result: totalMilesDriven. So we start our program this way...
+result: total_miles_driven. So we start our program this way...
 
 ----
-totalMilesDriven = 0
+total_miles_driven = 0
 
 # print result of computation
-print(totalMilesDriven)
+print(total_miles_driven)
 ----
 
 It's often good to start with a very simple template. If we run that, we will see 0 (zero) as the result, right?
@@ -32,39 +32,39 @@ It's often good to start with a very simple template. If we run that, we will se
 Next step, let's add the variables we know.
 
 ----
-totalMilesDriven = 0
-totalHoursTaken = 0
+total_miles_driven = 0
+total_hours_taken = 0
 
-totalGasGallons = 12.0
-milesPerGallon = 22.0
-milesPerHour = 55.0
+total_gas_gallons = 12.0
+miles_per_gallon = 22.0
+miles_per_hour = 55.0
 
 # print result of computation
-print(totalMilesDriven)
+print(total_miles_driven)
 ----
 
 Okay, good. We've added all the stuff we know about the computation. Well, except
 the part of the _actual computation_.
 
-You probably know that if you multiply the milesPerGallon by the totalGasGallons,
-that will give you totalMilesDriven.
-And if you divide the totalMilesDriven by the milesPerHour, you will get the totalHoursTaken.
+You probably know that if you multiply the miles_per_gallon by the total_gas_gallons,
+that will give you total_miles_driven.
+And if you divide the total_miles_driven by the miles_per_hour, you will get the total_hours_taken.
 
 So let's add those as Python statements.
 
 ----
-totalMilesDriven = 0
-totalHoursTaken = 0
+total_miles_driven = 0
+total_hours_taken = 0
 
-totalGasGallons = 12.0
-milesPerGallon = 22.0
-milesPerHour = 55.0
+total_gas_gallons = 12.0
+miles_per_gallon = 22.0
+miles_per_hour = 55.0
 
-totalMilesDriven = milesPerGallon * totalGasGallons
-totalHoursTaken = totalMilesDriven / milesPerHour
+total_miles_driven = miles_per_gallon * total_gas_gallons
+total_hours_taken = total_miles_driven / miles_per_hour
 
 # print result of computation
-print(totalMilesDriven, totalHoursTaken)
+print(total_miles_driven, total_hours_taken)
 ----
 
 We get as a result 264 miles driven in 4.8 hours.
@@ -92,19 +92,19 @@ we then know that we need 365 cans of food. So we can describe that as
 
 [source]
 ----
-totalCost = 0
-cansNeeded = 365
-costPerCan = 2.0 / 3.0
+total_cost = 0
+cans_needed = 365
+cost_per_can = 2.0 / 3.0
 
-totalCost = cansNeeded * costPerCan # right?
+total_cost = cans_needed * cost_per_can # right?
 
-monthsPerYear = 12
-costPerMonth = totalCost / monthsPerYear
+months_per_year = 12
+cost_per_month = total_cost / months_per_year
 # print result of computation
-print(totalCost, costPerMonth)
+print(total_cost, cost_per_month)
 ----
 
-What's going to be the answer? footnote:[totalCost will be $243.33 and $20.28 per month.] Run it in your Repl window to work it all out.
+What's going to be the answer? footnote:[total_cost will be $243.33 and $20.28 per month.] Run it in your Repl window to work it all out.
 
 And let's do one more.
 
@@ -114,10 +114,10 @@ A cell phone company charges a monthly rate of $12.95 and $1.00 a gigabyte of da
 
 [source]
 ----
-dataUsed = 0.0
+data_used = 0.0
 
 # print result of computation
-print("total data used (GB)", dataUsed)
+print("total data used (GB)", data_used)
 ----
 
 Let's add what we know: that the monthly base charge (for calls, and so on) is $12.95 
@@ -127,31 +127,31 @@ that written down.
 
 [source]
 ----
-dataUsed = 0.0
-costPerGB = 1.0
-monthlyRate = 12.95
+data_used = 0.0
+cost_per_gb = 1.0
+monthly_rate = 12.95
 
-thisBill = 21.20
+this_bill = 21.20
 
 # print result of computation
-print("total data used (GB)", dataUsed)
+print("total data used (GB)", data_used)
 ----
-Now we're ready to do the computation. If we subtract the monthlyRate from thisBill, we get the total cost of data. Then, if we divide the total cost of data by the cost per gigabyte, we
-will get the dataUsed.
+Now we're ready to do the computation. If we subtract the monthly_rate from this_bill, we get the total cost of data. Then, if we divide the total cost of data by the cost per gigabyte, we
+will get the data_used.
 
 [source]
 ----
-dataUsed = 0.0
-costPerGB = 1.0
-monthlyRate = 12.95
+data_used = 0.0
+cost_per_gb = 1.0
+monthly_rate = 12.95
 
-thisBill = 21.20
-totalDataCost = thisBill - monthlyRate
+this_bill = 21.20
+total_data_cost = this_bill - monthly_rate
 
-dataUsed = totalDataCost / costPerGB
+data_used = total_data_cost / cost_per_gb
 
 # print result of computation
-print("total data used (GB)", dataUsed)
+print("total data used (GB)", data_used)
 ----
 
 How many GBs of data did we use? Turns out to be 8.25 gigabytes.

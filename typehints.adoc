@@ -1,0 +1,126 @@
+
+
+== Type Hints
+
+Way back in the Variables chapter, we saw that Python variables are dynamic - a variable can hold a string one moment and a number the next, and Python never complains. That flexibility is one of Python's superpowers. But it comes with a cost: just by glancing at a function, there's often no way to tell what kind of data it expects, or what kind of data it's going to hand back to you.
+
+*Type hints* are Python's answer to that problem.
+
+=== What Is a Type Hint?
+
+A type hint is a little note you add to a function (or a variable) saying what type of data you *expect* to be dealing with.
+
+[source]
+----
+def greet_user(username: str) -> str:
+    return "Hello, " + username + "!"
+
+print(greet_user("Mike Jones"))  # -> Hello, Mike Jones!
+----
+
+Two new things showed up here:
+
+* `username: str` - this says "I expect `username` to be a string."
+* `-> str` - this says "this function returns a string."
+
+Read the whole line almost like a sentence: `greet_user` takes a `username`, which should be a `str`, and returns a `str`.
+
+=== Important: Hints Are Not Enforced
+
+Here's the part that trips people up: type hints are *hints*, not rules. Python will not stop you from breaking one.
+
+[source]
+----
+def add_bonus(score: int, bonus: int) -> int:
+    return score + bonus
+
+print(add_bonus(50, "10"))
+# TypeError: unsupported operand type(s) for +: 'int' and 'str'
+----
+
+We hinted `bonus` as an `int`, but nothing physically stopped us from calling `add_bonus` with the string `"10"` instead. The program still crashed - but notice *why*. It crashed because `+` genuinely can't combine a number and a string together, the same problem you've run into before with strings and numbers. It did *not* crash because we broke the type hint; Python never even glances at the hint while your program is running. The hint didn't prevent this mistake - it just would have warned a careful reader (or a smart editor) about it *before* the code ever ran.
+
+NOTE: Type hints are sometimes called "optional" for a good reason - your code runs exactly the same with them or without them. They're there for *people* (including future-you) and for tools, not for the Python interpreter to police.
+
+=== Why Bother, Then?
+
+If Python doesn't enforce them, what's the point? A few good reasons:
+
+* *Readability* - anyone reading `def greet_user(username: str) -> str:` instantly knows what to hand this function, without having to go read the whole function body first.
+* *Self-documentation* - the hints live right in the code, so they can't drift out of date the way a separate comment or document sometimes does.
+* *Tooling* - modern code editors read your type hints and warn you *immediately*, often as you're typing, if you're about to pass the wrong kind of thing into a function. That catches a whole category of mistakes before you ever hit run.
+
+As your programs get bigger, and especially once you're working on a team where other people read your code, these small hints save a surprising amount of confusion.
+
+=== Common Types You'll Hint
+
+You already know most of these types by name - now you know how to write them as hints.
+
+[cols=",",options="header",]
+|===
+|Hint |Means
+|`str` |A string
+|`int` |A whole number
+|`float` |A decimal number
+|`bool` |True or False
+|`list` |A list
+|`dict` |A dictionary
+|`tuple` |A tuple
+|`set` |A set
+|`None` |Nothing at all
+|===
+
+[source]
+----
+def take_damage(player: dict, amount: int) -> None:
+    player["health"] = player["health"] - amount
+----
+
+That `-> None` is a common one - it says "this function doesn't hand anything back." `take_damage` just changes `player` in place and returns nothing, so `None` is the honest, accurate hint.
+
+=== Hinting What's *Inside* a Collection
+
+You can get more specific than just "this is a list" - you can say what kind of thing fills that list.
+
+[source]
+----
+def total_damage(hits: list[int]) -> int:
+    return sum(hits)
+----
+
+`list[int]` means "a list, and every item inside it should be an `int`." The same trick works for dictionaries, showing both the key type and the value type.
+
+[source]
+----
+def build_health_lookup(names: list[str], scores: list[int]) -> dict[str, int]:
+    return {name: score for name, score in zip(names, scores)}
+----
+
+That return hint, `dict[str, int]`, tells us this function hands back a dictionary whose keys are strings and whose values are integers - exactly the kind of dictionary comprehension we built a couple chapters back.
+
+=== Type Hints and Default Parameters Play Nicely Together
+
+You can combine everything from the last chapter with type hints, all in the same function signature.
+
+[source]
+----
+def cast_spell(caster: str, spell: str = "fireball", power: int = 50) -> str:
+    return caster + " casts " + spell + " for " + str(power) + " damage!"
+
+print(cast_spell("Gandalf"))
+# -> Gandalf casts fireball for 50 damage!
+----
+
+Notice the hint and the default value sit right next to each other: `spell: str = "fireball"` says both "this should be a string" *and* "if you don't provide one, use `'fireball'`."
+
+[TIP]
+====
+* Take the `take_damage(player, amount=10)` function from the last chapter
+* Add type hints: `player` should be hinted as a `dict`, `amount` as an `int`
+* Give the function a `-> None` return hint, since it doesn't return anything
+* Call it once with correct types, and once "incorrectly" (like a string for `amount`) just to see that Python still runs it either way
+====
+
+=== A Habit Worth Building Now
+
+You don't have to type-hint every single line of code you write, especially while you're still learning. But it's a genuinely good professional habit to start building early - the kind of thing that makes your code easier for *other* people (and future-you) to pick up and trust at a glance. The more Python you write, the more you'll find yourself reaching for a type hint out of habit, simply because it makes the code that much clearer.

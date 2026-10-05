@@ -1,0 +1,137 @@
+
+
+== Generators
+
+That `Countdown` class from the last chapter worked, but notice how much ceremony it took: a `+++__init__+++` to set up state, a `+++__iter__+++` that just returned `self`, and a `+++__next__+++` that had to manually track `self.current` and remember to raise `StopIteration` at exactly the right moment. That's a lot of bookkeeping for something as simple as "count down from 3 to 0." Python has a much shorter way to write the same thing, called a *generator*.
+
+=== A Simpler Way: The `yield` Keyword
+
+Here's `Countdown`, rewritten as a plain function:
+
+[source]
+----
+def countdown(start):
+    current = start
+    while current >= 0:
+        yield current
+        current -= 1
+
+for count in countdown(3):
+    print(count)
+
+# output is
+# 3
+# 2
+# 1
+# 0
+----
+
+Same result, in a fraction of the code, and no class in sight. The magic word is `yield`. The moment a function contains `yield` anywhere in its body, Python treats it completely differently from a regular function - it becomes a *generator function*.
+
+=== What `yield` Actually Does
+
+When you call `countdown(3)`, the function body *doesn't run yet*. Instead, you get back a special generator object - one that already knows how to act as an iterator, with `+++__iter__+++` and `+++__next__+++` built in for you automatically. No writing those dunders yourself; Python hands you a working iterator just by seeing `yield` in your function.
+
+Each time something calls `next()` on it, the function runs until it hits `yield`, hands back that value, and then *pauses* - completely frozen, remembering every local variable exactly as it was. The next time `next()` is called, it picks up right where it left off, continuing the loop, right after that `yield` line.
+
+[source]
+----
+def countdown(start):
+    current = start
+    while current >= 0:
+        yield current
+        current -= 1
+
+counter = countdown(2)
+
+print(next(counter))  # -> 2
+print(next(counter))  # -> 1
+print(next(counter))  # -> 0
+print(next(counter))  # -> StopIteration
+----
+
+When the function finally falls off the end (here, once the `while` condition goes false), Python automatically raises `StopIteration` for you too - just like the manual iterator from last chapter, except you never had to write that part yourself.
+
+=== Generators Are Lazy (In a Good Way)
+
+Here's the real payoff. A list comprehension builds its *entire* result, all at once, sitting in memory.
+
+[source]
+----
+squares = [x * x for x in range(1000000)]
+----
+
+That line immediately creates a list with a million numbers in it, whether you ever use all of them or not. A generator, on the other hand, produces values *one at a time, only when asked*. Nothing gets computed until `next()` actually calls for it.
+
+[source]
+----
+def squares_up_to(limit):
+    x = 0
+    while x < limit:
+        yield x * x
+        x += 1
+
+for square in squares_up_to(1000000):
+    if square > 100:
+        break
+    print(square)
+----
+
+Even though `squares_up_to` could technically go all the way to a million, we only ever computed the handful of squares we actually printed before `break` stopped things. This "produce only what's needed, only when it's needed" behavior is called being *lazy*, and it can save a serious amount of memory and time once your data gets large.
+
+=== Generator Expressions
+
+Remember comprehensions? Generators have their own version of that shorthand too, called a *generator expression* - it looks just like a list comprehension, but with parentheses instead of square brackets.
+
+[source]
+----
+squares = (x * x for x in range(1000000))
+
+print(type(squares))  # -> <class 'generator'>
+----
+
+Nothing gets computed yet - `squares` is just a generator, waiting patiently to be asked for values. You can loop over it like anything else iterable:
+
+[source]
+----
+squares = (x * x for x in range(5))
+
+for square in squares:
+    print(square)
+
+# output is
+# 0
+# 1
+# 4
+# 9
+# 16
+----
+
+You'll often see a generator expression used directly inside a function call, with the parentheses left off entirely.
+
+[source]
+----
+total = sum(x * x for x in range(1000000))
+print(total)
+----
+
+That computes the sum of a million squares without ever holding all million of them in memory at the same time - each one gets produced, added to the running total, and thrown away, one at a time.
+
+[TIP]
+====
+* Rewrite the `HealthDrain` class from the last chapter's exercise as a generator function using `yield`
+* Compare how many lines it took as a class versus as a generator function
+* Then write a generator expression that produces the squares of only the *even* numbers from 0 to 20
+====
+
+=== Iterators and Generators, Side by Side
+
+[cols=",,",options="header",]
+|===
+|  |Iterator (a class) |Generator (a function)
+|How you build one |Write `+++__init__+++`, `+++__iter__+++`, `+++__next__+++` |Write a function using `yield`
+|State tracking |You manage it yourself, on `self` |Python remembers it for you automatically
+|Typical amount of code |More |Much less
+|===
+
+Both approaches produce the exact same thing from the outside - something you can hand to a `for` loop, or to `next()`, one value at a time. Now that you've built one the hard way with a class, and the easy way with `yield`, you'll recognize both wherever they show up in real Python code - and you'll almost always reach for `yield`.
