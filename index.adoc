@@ -204,6 +204,8 @@ include::iterators.adoc[]
 
 include::generators.adoc[]
 
+include::mixins.adoc[]
+
 include::appendixa.adoc[]
 
 include::appendixb.adoc[]
