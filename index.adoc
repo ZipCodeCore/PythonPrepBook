@@ -3,6 +3,8 @@
 Kristofer Younger <kris@zipcodewilmington.com>
 v2.0.4, 2026-10-05
 :doctype: book
+:media: print
+:media: prepress
 :imagesdir: images
 :pdf-theme: pypreptheme.yml
 :source-highlighter: rouge
@@ -10,7 +12,7 @@ v2.0.4, 2026-10-05
 :source-language: python
 :icons: font
 :homepage: https://zipcodewilmington.com
-:pdf-page-size:  [7.0in, 9.0in]
+:pdf-page-size:  [7.0in, 9.25in]
 :toc:
 
 [colophon]
@@ -19,7 +21,7 @@ v2.0.4, 2026-10-05
 Zip Code Wilmington's Programming in Python
 by Kristofer Younger
 
-Copyright (C) 2020 - 2027 by Zip Code Wilmington. All Rights Reserved.
+Copyright (C) 2020 - 2027 by Kristofer Younger. All Rights Reserved.
 
 Published in the U.S.A.
 

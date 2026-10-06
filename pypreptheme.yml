@@ -11,3 +11,9 @@ heading:
 code:
   font_color: $base_font_color
   font_size: $base_font_size - 1
+page:
+  margin: [0.5in, 0.67in, 0.67in, 0.67in]
+  margin-inner: 0.75in
+  margin-outer: 0.59in
+footer:
+  height: 0.75in
